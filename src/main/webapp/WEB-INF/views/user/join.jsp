@@ -12,26 +12,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원 가입</title>
 <script>
+	var checkIdBool = false;
+	var checkIdStr = "";
 	function checkInput() {
+
 		var obj = document.signUpForm;
-		
+
 		// TODO
 		// messages 파일에 있는 요구 조건 자바스크립트도 추가하기
-		
+
 		if (isNull(obj.name)) {
 			alert('이름을 입력해주세요');
-			obj.inputName.focus();
+			obj.name.focus();
+			console.log(checkIdBool);
+			console.log(checkIdStr); 
 			return false;
 		} else if (isNull(obj.id)) {
 			alert('아이디를 입력해주세요');
-			obj.inputID.focus();
+			obj.id.focus();
 			return false;
-		} /* else if (isNull(obj.validateID) //TODO
-							|| (obj.validateID.value != obj.inputID.value)) {
-						alert('아이디 중복확인을 해주세요');
-						obj.inputID.focus();
-						return false;
-		} */else if (isNull(obj.password)) {
+		} else if (!checkIdBool || !(checkIdStr == obj.id.value)) {
+			alert('아이디 중복확인을 해주세요');
+			obj.id.focus();
+			return false;
+		} else if (isNull(obj.password)) {
 			alert('비밀번호를 입력해주세요');
 			obj.password.focus();
 			return false;
@@ -57,18 +61,33 @@
 		}
 	}
 
-	function checkID() {
-		sID = document.signUpForm.inputID.value;
+	$(document).ready(function() {
+		$("#btnIdCheck").on("click", function() {
 
-		if (sID == "") {
-			alert('입력된 아이디가 없습니다.');
-		} else {
-			/* window.open('/homework/checkID.do?id=' + sID, "",
-					"width=400 height=150"); */
-			// TODO
-			// ajax로 아이디 중복확인 처리
-		}
-	}
+			var id = $("#id").val();
+
+			$.ajax({
+				url : "${pageContext.request.contextPath}/user/checkid",
+				type : "get",
+				data : {
+					id : id
+				},
+				success : function(result) {
+					if (result.data == true) {
+						alert("이미 가입되어있는 아이디 입니다.");
+					} else {
+						alert("사용 가능한 아이디 입니다.");
+						checkIdBool = true;
+						checkIdStr = id;
+					}
+				},
+				error : function(xhr, status, error) {
+					alert("error");
+					console.err(status + " : " + error);
+				}
+			});
+		});
+	});
 </script>
 </head>
 <body>
@@ -88,21 +107,23 @@
 				<br />
 
 
-				<form:form action='${pageContext.request.contextPath }/user/join' method="post" class="form-horizontal" name="signUpForm"
-					modelAttribute="userVo" onsubmit="return checkInput()">
+				<form:form action='${pageContext.request.contextPath }/user/join'
+					method="post" class="form-horizontal" name="signUpForm"
+					modelAttribute="userVo" >
+					<%-- onsubmit="return checkInput()" --%>
 
 
 					<div class="form-group">
 						<label for="inputName" class="col-sm-3 control-label">이름</label>
 						<div class="col-sm-6">
-							<form:input path="name" class="form-control" placeholder="이름"/>
+							<form:input path="name" class="form-control" placeholder="이름" />
 							<spring:hasBindErrors name="userVo">
-							<c:if test="${errors.hasFieldErrors('name') }">
-								<font color="red"> <spring:message
-										code="${errors.getFieldError('name').codes[0] }"
-										text="${errors.getFieldError('name').defaultMessage }" /> 
-								</font>
-							</c:if>
+								<c:if test="${errors.hasFieldErrors('name') }">
+									<font color="red"> <spring:message
+											code="${errors.getFieldError('name').codes[0] }"
+											text="${errors.getFieldError('name').defaultMessage }" />
+									</font>
+								</c:if>
 							</spring:hasBindErrors>
 						</div>
 					</div>
@@ -110,14 +131,14 @@
 					<div class="form-group">
 						<label for="inputID" class="col-sm-3 control-label">아이디</label>
 						<div class="col-sm-4">
-							<form:input path="id" class="form-control" placeholder="아이디"/>
+							<form:input path="id" class="form-control" placeholder="아이디" />
 							<spring:hasBindErrors name="userVo">
-							<c:if test="${errors.hasFieldErrors('id') }">
-								<font color="red"> <spring:message
-										code="${errors.getFieldError('id').codes[0] }"
-										text="${errors.getFieldError('id').defaultMessage }" /> 
-								</font>
-							</c:if>
+								<c:if test="${errors.hasFieldErrors('id') }">
+									<font color="red"> <spring:message
+											code="${errors.getFieldError('id').codes[0] }"
+											text="${errors.getFieldError('id').defaultMessage }" />
+									</font>
+								</c:if>
 							</spring:hasBindErrors>
 						</div>
 						<input type="hidden" name="validateID" />
@@ -130,15 +151,16 @@
 					<div name="inputPW" class="form-group">
 						<label for="inputPassword" class="col-sm-3 control-label">비밀번호</label>
 						<div name="child" class="col-sm-6">
-							<form:input path="password" class="form-control" type="password" placeholder="비밀번호"/>
+							<form:input path="password" class="form-control" type="password"
+								placeholder="비밀번호" />
 							<p class="help-block">숫자,문자 8자 이상 20이하</p>
 							<spring:hasBindErrors name="userVo">
-							<c:if test="${errors.hasFieldErrors('name') }">
-								<font color="red"> <spring:message
-										code="${errors.getFieldError('password').codes[0] }"
-										text="${errors.getFieldError('password').defaultMessage }" /> 
-								</font>
-							</c:if>
+								<c:if test="${errors.hasFieldErrors('name') }">
+									<font color="red"> <spring:message
+											code="${errors.getFieldError('password').codes[0] }"
+											text="${errors.getFieldError('password').defaultMessage }" />
+									</font>
+								</c:if>
 							</spring:hasBindErrors>
 						</div>
 					</div>
@@ -147,8 +169,8 @@
 						<label for="inputPasswordCheck" class="col-sm-3 control-label">비밀번호
 							확인</label>
 						<div name="child2" class="col-sm-6">
-							<input type="password" class="form-control"
-								name="passwordCk" placeholder="비밀번호 확인" />
+							<input type="password" class="form-control" name="passwordCk"
+								placeholder="비밀번호 확인" />
 
 							<p class="help-block">비밀번호를 한번 더 입력해주세요.</p>
 						</div>
@@ -169,7 +191,8 @@
 					<div class="form-group">
 						<label for="signUp" class="col-sm-2 control-label"></label>
 						<div class="col-sm-8">
-							<button type="submit" class="btn btn-default">회원가입</button>
+							<!-- <button type="submit" class="btn btn-default">회원가입</button> -->
+							<input type="button" class="btn btn-default" value="회원가입" onclick="checkInput()"/>
 						</div>
 					</div>
 				</form:form> </article>
@@ -180,29 +203,4 @@
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#btnIdCheck").on("click",function(){
-			var id = $("#id").val();
-			console.log(id);
-			
-			$.ajax({
-				url:"${pageContext.request.contextPath}/user/checkid",
-				type : "get",
-				data : {id : id},
-				success : function(result){
-					if(result.data == true){
-						alert("이미 가입되어있는 아이디 입니다.");
-					}else{
-						alert("사용 가능한 아이디 입니다.");
-					}
-				},
-				error : function(xhr,status , error){
-					alert("error");
-					console.err(status + " : "+error);
-				}
-			});
-		});
-	});
-</script>
 </html>
