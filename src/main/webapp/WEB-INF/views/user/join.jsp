@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
 <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,38 +14,35 @@
 <script>
 	function checkInput() {
 		var obj = document.signUpForm;
+
+		console.log(obj.checkbox.checked);
 		
-		console.log("들어옴");
-		
-		if(!(obj.checkbox[0].checked)){
-			alert('약관을 동의해주세요.');
-		}
-		
-		if (isNull(obj.inputName)) {
+		if (isNull(obj.name)) {
 			alert('이름을 입력해주세요');
 			obj.inputName.focus();
 			return false;
-		} else if (isNull(obj.inputID)) {
+		} else if (isNull(obj.id)) {
 			alert('아이디를 입력해주세요');
 			obj.inputID.focus();
 			return false;
-		} else if (isNull(obj.validateID)
-				|| (obj.validateID.value != obj.inputID.value)) {
-			alert('아이디 중복확인을 해주세요');
-			obj.inputID.focus();
-			return false;
-		} else if (isNull(obj.inputPassword)) {
+		} /* else if (isNull(obj.validateID) //TODO
+							|| (obj.validateID.value != obj.inputID.value)) {
+						alert('아이디 중복확인을 해주세요');
+						obj.inputID.focus();
+						return false;
+		} */else if (isNull(obj.password)) {
 			alert('비밀번호를 입력해주세요');
-			obj.inputPassword.focus();
+			obj.password.focus();
 			return false;
-		} else if (obj.inputPassword.value != obj.inputPasswordCheck.value) {
+		} else if (obj.password.value != obj.passwordCk.value) {
 			alert('비밀번호가 일치하지 않습니다.');
-			obj.inputPasswordCheck.focus();
+			obj.passwordCk.focus();
 			return false;
-		} else if(!(obj.checkbox[0].checked)){
+		} else if (!(obj.checkbox.checked)) {
 			alert('약관을 동의해주세요.');
+			obj.passwordCk.focus();
+			return false;
 		} else {
-			console.log("들어옴2");
 			document.signUpForm.submit();
 		}
 	}
@@ -78,7 +75,7 @@
 		<div id="container">
 			<c:import url="/WEB-INF/views/includes/header.jsp" />
 			<br>
-		
+
 			<div id="content" class="contentwrap" align="center">
 				<article class="container">
 				<div class="page-header">
@@ -88,27 +85,42 @@
 					</h2>
 				</div>
 				<br />
-				
 
-				<!-- TODO -->
-				<!-- 회원가입 처리 Controller 주소 입력 -->
-				<form action='' method="post"
-					class="form-horizontal" name="signUpForm"
-					onsubmit="return checkInput()">
-					
+
+				<!-- TODO --> <!-- 회원가입 처리 Controller 주소 입력 --> 
+				<form:form action='${pageContext.request.contextPath }/user/join' method="post" class="form-horizontal" name="signUpForm"
+					modelAttribute="userVo" onsubmit="return checkInput()">
+
+
 					<div class="form-group">
 						<label for="inputName" class="col-sm-3 control-label">이름</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control" name="inputName"
-								placeholder="이름 입력" />
+							<form:input path="name" class="form-control" />
+							<spring:hasBindErrors name="userVo">
+							<c:if test="${errors.hasFieldErrors('name') }">
+								<strong> <spring:message
+										code="${errors.getFieldError('name').codes[0] }"
+										text="${errors.getFieldError('name').defaultMessage }" /> <!-- 없으면, hibernate가 보내주는 기본 메세지 출력 -->
+								</strong>
+							</c:if>
+							</spring:hasBindErrors>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="inputID" class="col-sm-3 control-label">아이디</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" name="inputID"
-								placeholder="아이디" />
+							<!-- <input type="text" class="form-control" name="inputID"
+								placeholder="아이디" /> -->
+							<form:input path="id" class="form-control" />
+							<spring:hasBindErrors name="userVo">
+							<c:if test="${errors.hasFieldErrors('id') }">
+								<strong> <spring:message
+										code="${errors.getFieldError('id').codes[0] }"
+										text="${errors.getFieldError('id').defaultMessage }" /> <!-- 없으면, hibernate가 보내주는 기본 메세지 출력 -->
+								</strong>
+							</c:if>
+							</spring:hasBindErrors>
 						</div>
 						<input type="hidden" name="validateID" />
 
@@ -121,9 +133,18 @@
 					<div name="inputPW" class="form-group">
 						<label for="inputPassword" class="col-sm-3 control-label">비밀번호</label>
 						<div name="child" class="col-sm-6">
-							<input type="password" class="form-control" name="inputPassword"
-								placeholder="비밀번호" />
+							<!-- <input type="password" class="form-control" name="inputPassword"
+								placeholder="비밀번호" /> -->
+							<form:input path="password" class="form-control" type="password"/>
 							<p class="help-block">숫자,특수문자 포함 8자 이상</p>
+							<spring:hasBindErrors name="userVo">
+							<c:if test="${errors.hasFieldErrors('name') }">
+								<strong> <spring:message
+										code="${errors.getFieldError('password').codes[0] }"
+										text="${errors.getFieldError('password').defaultMessage }" /> <!-- 없으면, hibernate가 보내주는 기본 메세지 출력 -->
+								</strong>
+							</c:if>
+							</spring:hasBindErrors>
 						</div>
 					</div>
 
@@ -132,21 +153,21 @@
 							확인</label>
 						<div name="child2" class="col-sm-6">
 							<input type="password" class="form-control"
-								name="inputPasswordCheck" placeholder="비밀번호 확인" />
+								name="passwordCk" placeholder="비밀번호 확인" />
+
 							<p class="help-block">비밀번호를 한번 더 입력해주세요.</p>
 						</div>
 					</div>
 
 					<br />
 					<br />
-					
+
 					<div name="check" class="form-group">
 						<div class="col-sm-7 control-label">
-						<font>
-							약관동의<BR>
-						</font>
-							<input type="checkbox" id="checkbox" name="checkbox" value="checkbox">
-							<label for="checkbox">서비스 약관에 동의합니다.</label>
+							<font> 약관동의<BR>
+							</font> <label for="checkbox"> <input type="checkbox"
+								name="checkbox" value="checkbox" /> 서비스 약관에 동의합니다.
+							</label>
 						</div>
 					</div>
 
@@ -156,13 +177,10 @@
 							<button type="submit" class="btn btn-default">회원가입</button>
 						</div>
 					</div>
-				</form>
-				</article>
+				</form:form> </article>
 			</div>
 
-			<br>
-			<br>
-			<br>
+			<br> <br> <br>
 			<c:import url="/WEB-INF/views/includes/footer.jsp" />
 		</div>
 	</div>
