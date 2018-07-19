@@ -23,6 +23,7 @@
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
+		<br><br><br><br><br><br><br><br>
 		<div id="content" class="row">
 			<div class="row">	
 			<div class="col-sm-3"></div>

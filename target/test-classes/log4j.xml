@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.example.jblog">
-		<level value="info" />
+		<level value="error" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
