@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HelloControlloer {
 	@RequestMapping("/")
 	public String hello() {
-		return "test/hello"; 
+		return "home"; 
 	}
 }
