@@ -29,4 +29,8 @@ public class UserService {
 		}
 		return exist;
 	}
+
+	public UserVo getUserByIdAndPassword(String id, String password) {
+		return userDao.getUserByIdAndPassword(id,password);
+	}
 }

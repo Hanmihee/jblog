@@ -17,6 +17,15 @@ public class UserVo {
 	@NotEmpty
 	@Pattern(regexp = "^[0-9a-zA-Z]{8,20}$")
 	private String password;
+	private String regDate;
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
 
 	public Long getNo() {
 		return no;

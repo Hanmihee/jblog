@@ -12,19 +12,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login</title>
 <script>
-	function isNull(obj, msg) {
-		if (obj.value == "") {
-			alert(msg);
-			obj.focus();
-			return true;
-		}
-	}
-	function doAction() {
-		var f = document.LoginForm;
-		if (isNull(f.id, '아이디를 입력해주세요!')) {
+	function doCheck() {
+		console.log("들어옴1");
+		var f = document.loginForm;
+		if (isNull(f.id)) {
+			console.log("들어옴2");
+			alert("아이디를 입력해주세요");
 			return false;
 		}
-		if (isNull(f.password, '비밀번호를 입력해주세요!')) {
+		else if (isNull(f.password)) {
+			console.log("들어옴3");
+			alert("비밀번호를 입력해주세요");
+			return false;
+		}else {
+			console.log("들어옴4");
+			document.loginForm.submit();
+		}
+	}
+	function isNull(obj) {
+		if (obj.value == "") {
+			obj.focus();
+			return true;
+		}else{
 			return false;
 		}
 	}
@@ -59,11 +68,11 @@
 								<br />
 								<br />
 								<!-- 로그인을 처리하는 Controller의 주소 입력  -->
-								<form class="form-signin" name="loginProcess" action=''method="POST" onsubmit="return doCheck()">
+								<form class="form-signin" name="loginForm" action='${pageContext.request.contextPath }/user/login' method="POST" onsubmit="return doCheck()">
 									<input type="text" class="form-control" placeholder="ID"
-										name="id" required autofocus> <input type="password"
+										name="id" > <input type="password"
 										class="form-control" placeholder="PASSWORD" name="password"
-										required autofocus> <br />
+										> <br />
 									<button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
 								</form>
 							</div>

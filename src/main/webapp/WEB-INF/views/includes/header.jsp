@@ -31,7 +31,7 @@
 											수정</a></li>
 									<li><a
 										href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
-									${authUser.name }님 안녕하세요 ^^
+									<li><a href="">${authUser.name }님 안녕하세요 ^^</a></li>
 								</c:otherwise>
 							</c:choose>
 						</ul>	
