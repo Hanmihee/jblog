@@ -15,7 +15,7 @@ public class UserVo {
 	@Length(min = 2, max = 20)
 	private String id;
 	@NotEmpty
-	@Pattern(regexp = "^[0-9a-zA-Z]{4,10}$")
+	@Pattern(regexp = "^[0-9a-zA-Z]{8,20}$")
 	private String password;
 
 	public Long getNo() {

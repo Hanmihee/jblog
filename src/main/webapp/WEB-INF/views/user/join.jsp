@@ -14,8 +14,9 @@
 <script>
 	function checkInput() {
 		var obj = document.signUpForm;
-
-		console.log(obj.checkbox.checked);
+		
+		// TODO
+		// messages 파일에 있는 요구 조건 자바스크립트도 추가하기
 		
 		if (isNull(obj.name)) {
 			alert('이름을 입력해주세요');
@@ -87,7 +88,6 @@
 				<br />
 
 
-				<!-- TODO --> <!-- 회원가입 처리 Controller 주소 입력 --> 
 				<form:form action='${pageContext.request.contextPath }/user/join' method="post" class="form-horizontal" name="signUpForm"
 					modelAttribute="userVo" onsubmit="return checkInput()">
 
@@ -95,13 +95,13 @@
 					<div class="form-group">
 						<label for="inputName" class="col-sm-3 control-label">이름</label>
 						<div class="col-sm-6">
-							<form:input path="name" class="form-control" />
+							<form:input path="name" class="form-control" placeholder="이름"/>
 							<spring:hasBindErrors name="userVo">
 							<c:if test="${errors.hasFieldErrors('name') }">
-								<strong> <spring:message
+								<font color="red"> <spring:message
 										code="${errors.getFieldError('name').codes[0] }"
-										text="${errors.getFieldError('name').defaultMessage }" /> <!-- 없으면, hibernate가 보내주는 기본 메세지 출력 -->
-								</strong>
+										text="${errors.getFieldError('name').defaultMessage }" /> 
+								</font>
 							</c:if>
 							</spring:hasBindErrors>
 						</div>
@@ -110,15 +110,13 @@
 					<div class="form-group">
 						<label for="inputID" class="col-sm-3 control-label">아이디</label>
 						<div class="col-sm-4">
-							<!-- <input type="text" class="form-control" name="inputID"
-								placeholder="아이디" /> -->
-							<form:input path="id" class="form-control" />
+							<form:input path="id" class="form-control" placeholder="아이디"/>
 							<spring:hasBindErrors name="userVo">
 							<c:if test="${errors.hasFieldErrors('id') }">
-								<strong> <spring:message
+								<font color="red"> <spring:message
 										code="${errors.getFieldError('id').codes[0] }"
-										text="${errors.getFieldError('id').defaultMessage }" /> <!-- 없으면, hibernate가 보내주는 기본 메세지 출력 -->
-								</strong>
+										text="${errors.getFieldError('id').defaultMessage }" /> 
+								</font>
 							</c:if>
 							</spring:hasBindErrors>
 						</div>
@@ -133,16 +131,14 @@
 					<div name="inputPW" class="form-group">
 						<label for="inputPassword" class="col-sm-3 control-label">비밀번호</label>
 						<div name="child" class="col-sm-6">
-							<!-- <input type="password" class="form-control" name="inputPassword"
-								placeholder="비밀번호" /> -->
-							<form:input path="password" class="form-control" type="password"/>
-							<p class="help-block">숫자,특수문자 포함 8자 이상</p>
+							<form:input path="password" class="form-control" type="password" placeholder="비밀번호"/>
+							<p class="help-block">숫자,문자 8자 이상 20이하</p>
 							<spring:hasBindErrors name="userVo">
 							<c:if test="${errors.hasFieldErrors('name') }">
-								<strong> <spring:message
+								<font color="red"> <spring:message
 										code="${errors.getFieldError('password').codes[0] }"
-										text="${errors.getFieldError('password').defaultMessage }" /> <!-- 없으면, hibernate가 보내주는 기본 메세지 출력 -->
-								</strong>
+										text="${errors.getFieldError('password').defaultMessage }" /> 
+								</font>
 							</c:if>
 							</spring:hasBindErrors>
 						</div>
