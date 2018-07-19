@@ -15,4 +15,10 @@ public class UserDao {
 		int count = sqlSession.insert("user.insert",vo);
 		return count;
 	}
+
+	public UserVo getUserById(String id) {
+		UserVo uservo = sqlSession.selectOne("user.selectUserById",id);
+		System.out.println("vo의 상태? : "+uservo);
+		return uservo;
+	}
 }

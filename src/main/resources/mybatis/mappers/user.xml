@@ -12,4 +12,11 @@
 		)
 		]]>
 	</insert>
+	<select id="selectUserById" parameterType="string" resultType="uservo">
+		<![CDATA[
+			SELECT no,id,name
+			FROM users
+			WHERE id = #{id}
+		]]>
+	</select>
 </mapper>

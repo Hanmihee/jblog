@@ -123,8 +123,7 @@
 						<input type="hidden" name="validateID" />
 
 						<div class="col-sm-2">
-							<a class="btn btn-default" href="javascript:checkID()"
-								role="button">중복확인</a>
+							<a class="btn btn-default" id="btnIdCheck" role="button">중복확인</a>
 						</div>
 					</div>
 
@@ -181,4 +180,29 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btnIdCheck").on("click",function(){
+			var id = $("#id").val();
+			console.log(id);
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/user/checkid",
+				type : "get",
+				data : {id : id},
+				success : function(result){
+					if(result.data == true){
+						alert("이미 가입되어있는 아이디 입니다.");
+					}else{
+						alert("사용 가능한 아이디 입니다.");
+					}
+				},
+				error : function(xhr,status , error){
+					alert("error");
+					console.err(status + " : "+error);
+				}
+			});
+		});
+	});
+</script>
 </html>

@@ -1,7 +1,9 @@
 package com.example.jblog.controllers;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -13,6 +15,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.jblog.services.UserService;
 import com.example.jblog.vo.UserVo;
@@ -46,11 +50,32 @@ public class UserController {
 		
 		boolean result = userService.join(vo);
 		
-		return "redirect:/user/joinsuccess";
+		if(result) {
+			return "redirect:/user/joinsuccess";
+		}else {
+			return "redirect:/user/joinfail";
+		}
 	}
 	
 	@RequestMapping("/joinsuccess")
 	public String joinsuccess(){
 		return "user/joinsuccess";
+	}
+
+	@RequestMapping("/joinfail")
+	public String joinfail(){
+		return "user/joinfail";
+	}
+	
+	@RequestMapping(value="/checkid" ,method=RequestMethod.GET)
+	@ResponseBody
+	public Object exist(@RequestParam("id") String id) {
+		boolean exist = userService.exist(id);
+		
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("result", "success");
+		map.put("data", exist);
+		
+		return map;
 	}
 }
