@@ -23,25 +23,61 @@
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
-		<br><br><br><br><br><br><br><br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 		<div id="content" class="row">
-			<div class="row">	
-			<div class="col-sm-4"></div>
-			<div class="col-sm-6"><img src="${pageContext.request.contextPath }/img/jblog_logo.png"></div><br><br><br><br><br><br><br><br>
+			<div class="row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-6">
+					<img src="${pageContext.request.contextPath }/img/jblog_logo.png">
+				</div>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
 			</div>
-			
-			<div class="row">	
-			<div class="col-sm-3"></div>
-			<div class="col-sm-5">
-				<div class="row">
-					<input type="text" id="search_text" class="form-control col-sm-6"/>
+
+			<div class="row">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-5">
+					<div class="row">
+						<input type="text" id="search_text" class="form-control col-sm-6" />
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<button type="button" class="btn btn-default col-sm-2"
+						id="search_btn">검색</button>
 				</div>
 			</div>
-			<div class="col-sm-4"><button type="button" class="btn btn-default col-sm-2" id="search_btn">검색</button></div>
-			</div>
+		</div>
+		<br>
+		<div>
+			<div class="col-sm-5"></div>
+			<div class="col-sm-4"><form>
+				<label><input type='checkbox' name='search_checkbox' value='blogname' />블로그이름</label>
+				<label><input type='checkbox' name='search_checkbox' value='blogger' checked />블로거</label> 
+			</form></div>
+			<div class="col-sm-3"></div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
-	    <br><br><br><br><br><br><br><br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>

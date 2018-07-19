@@ -25,7 +25,6 @@
 				<div class="col-sm-5"></div>
 				<div class="col-sm-4">
 					<h2>회원가입 성공</h2>
-					<a href="/jblog">	Home 으로 가기</a><br>
 					<a href="${pageContext.servletContext.contextPath }/user/login">	로그인 하기</a>
 				</div>
 				<div class="col-sm-4"></div>

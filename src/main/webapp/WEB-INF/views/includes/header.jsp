@@ -27,8 +27,7 @@
 								</c:when>
 								<c:otherwise>
 									<li><a
-										href="${pageContext.servletContext.contextPath }/user/modify">회원정보
-											수정</a></li>
+										href="${pageContext.servletContext.contextPath }/user/modify">내블로그 관리</a></li>
 									<li><a
 										href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
 									<li><a href="">${authUser.name }님 안녕하세요 ^^</a></li>
