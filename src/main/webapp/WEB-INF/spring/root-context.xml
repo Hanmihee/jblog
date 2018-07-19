@@ -16,4 +16,32 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
+	<!-- MySQL DataSource -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/myportal?serverTimezone=UTC" />
+		<property name="username" value="webdb" />
+		<property name="password" value="webdb" />
+	</bean>
+
+
+	<!-- Mybatis SqlSessionFactory -->
+	<!-- 자바 코드 대신에 xml로 등록하는 형태 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- setter -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:mybatis/configuration.xml" />
+	</bean>
+
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- 생성자 -->
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
 </beans>
