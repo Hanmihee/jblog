@@ -12,6 +12,19 @@
 		)
 		]]>
 	</insert>
+	
+	<insert id="insertBlog" parameterType="uservo">
+	 <selectKey keyProperty="no" resultType="Long" order="BEFORE">
+    	select no FROM users WHERE id = #{id}
+  	 </selectKey>
+		<![CDATA[
+		INSERT INTO blog(user_no,title)
+		VALUES( #{no},
+			#{name}
+		)
+		]]>
+	</insert>
+	
 	<select id="selectUserById" parameterType="string" resultType="uservo">
 		<![CDATA[
 			SELECT no,id,name
@@ -19,6 +32,7 @@
 			WHERE id = #{id}
 		]]>
 	</select>
+	
 	<select id="selectUserByIdAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[
 			SELECT no,id,name,password

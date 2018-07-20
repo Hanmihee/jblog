@@ -33,4 +33,8 @@ public class UserService {
 	public UserVo getUserByIdAndPassword(String id, String password) {
 		return userDao.getUserByIdAndPassword(id,password);
 	}
+
+	/*public boolean createBlog(UserVo vo) {
+		return userDao.insertBlogInfo(vo) == 1;
+	}*/
 }
