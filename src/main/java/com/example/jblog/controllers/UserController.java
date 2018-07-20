@@ -38,8 +38,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginAction(@RequestParam("id") String id, @RequestParam String password, HttpSession session) {
-
+	public String loginAction(@RequestParam("id") String id, @RequestParam String password,HttpSession session) {
+		
 		UserVo authUser = userService.getUserByIdAndPassword(id, password);
 
 		// authUser가 null 값이 아니면 Session에 넣는다.
@@ -52,7 +52,7 @@ public class UserController {
 			return "redirect:/user/login";
 		}
 	}
-
+	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("authUser");
@@ -71,10 +71,9 @@ public class UserController {
 			return "/user/join";
 		}
 
-		boolean joinResult = userService.join(vo);
+		boolean result = userService.join(vo);
 
-		if (joinResult) {
-			// boolean blogResult = userService.createBlog(vo);
+		if (result) {
 			return "redirect:/user/joinsuccess";
 		} else {
 			return "redirect:/user/joinfail";

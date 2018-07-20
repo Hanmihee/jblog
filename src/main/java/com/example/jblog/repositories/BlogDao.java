@@ -12,6 +12,7 @@ public class BlogDao {
 	private SqlSession sqlSession;
 
 	public BlogVo getBlogById(String userId) {
-		return sqlSession.selectOne("blog.selectBlogById",userId);
+		System.out.println(userId);
+		return sqlSession.selectOne("blog.selectBlogById", userId);
 	}
 }
