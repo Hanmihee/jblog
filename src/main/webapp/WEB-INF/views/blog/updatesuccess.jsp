@@ -21,37 +21,27 @@
   src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
 </head> 
 <body> 
-  <div class="container"> 
-    <div class="jumbotron"> 
-      <c:import url="/WEB-INF/views/includes/blogheader.jsp" /> 
+  <div id="container"> 
+    <c:import url="/WEB-INF/views/includes/header.jsp" /> 
+    <br> 
+    <div class="row"> 
+      <div class="col-sm-1"></div> 
+      <div> 
+        <div> 
+          <a href="${pageContext.servletContext.contextPath }/blog/${authUser.id}/admin/basicsetting"><font size="4">기본설정 &nbsp&nbsp</font> </a> 
+          <a href=""><font size="4">카테고리 설정 &nbsp&nbsp</font> </a>
+          <a href="${pageContext.servletContext.contextPath }/blog/${authUser.id}/admin/basicsetting"><font size="4">글 작성 &nbsp&nbsp</font> </a> 
+        </div> 
+        <br> 
+        <br> 
+         
+        업데이트성공
+        
+        <div class="col-sm-1"></div> 
+      </div> 
     </div> 
+    <br> 
+    <c:import url="/WEB-INF/views/includes/footer.jsp" /> 
   </div> 
-  <br> 
-  <div class="row"> 
-    <div class="col-sm-1"></div> 
- 
-    <div class="col-sm-7"> 
-      <div>게시글 내용</div> 
-      <div>댓글</div> 
-      <div>게시글 목록</div> 
-    </div> 
- 
-    <div class="col-sm-3"> 
-    	<!-- 로고 분기처리 -->
-      <c:choose>
-      	<c:when test="${empty blog.logo }">
-      		<div><img src="${pageContext.request.contextPath }/img/default_logo.png"></div>
-      	</c:when>
-      	<c:otherwise>
-      		<div><img src="${pageContext.request.contextPath }/logo/${blog.logo}"></div>
-      	</c:otherwise>
-      </c:choose>
-      <div>내 카테고리</div> 
-    </div> 
- 
-    <div class="col-sm-1"></div> 
-  </div> 
-  <br> 
-  <c:import url="/WEB-INF/views/includes/footer.jsp" /> 
 </body> 
 </html>

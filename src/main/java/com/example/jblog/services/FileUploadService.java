@@ -3,30 +3,12 @@ package com.example.jblog.services;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.jblog.repositories.BlogDao;
-import com.example.jblog.vo.BlogVo;
-import com.example.jblog.vo.UserVo;
-
 @Service
-public class BlogService {
-
-	@Autowired
-	private BlogDao blogdao;
-
-	public BlogVo getBlogContent(String userId) {
-		return blogdao.getBlogById(userId);
-	}
-
-	public boolean updateBlogNameAndLogo(Map<String , String> blogMap) {
-		return blogdao.saveBlogNameAndLogo(blogMap);
-	}
-	
+public class FileUploadService {
 	private static String SAVE_PATH = "/logo";
 
 	public String updateSetting(MultipartFile logoImg) {

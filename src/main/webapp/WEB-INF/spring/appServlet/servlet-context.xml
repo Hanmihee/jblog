@@ -32,4 +32,16 @@
 		<beans:property name="basename" value="messages/messages" />
 	</beans:bean >
 	
+	<!-- Multipart Resolver Setting -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- defualt enconding -->
+		<beans:property name="defaultEncoding" value="utf-8"/>
+		<!-- max upload size -->
+		<beans:property name="maxUploadSize" value="5242880"/>
+	</beans:bean>
+	
+	<!-- Resources Mapping -->
+	<mvc:resources location="file:/logo/" mapping="/logo/**" />
+		
 </beans:beans>

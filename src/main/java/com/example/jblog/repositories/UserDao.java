@@ -31,7 +31,7 @@ public class UserDao {
 		userMap.put("password", password);
 		
 		UserVo uservo = sqlSession.selectOne("user.selectUserByIdAndPassword",userMap);
-		
+		System.out.println(uservo.getRegDate());
 		return uservo;
 	}
 }

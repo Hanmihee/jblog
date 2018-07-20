@@ -28,15 +28,16 @@
       <div class="col-sm-1"></div> 
       <div> 
         <div> 
-          <a href=""><font size="4">기본설정 &nbsp&nbsp</font> </a> <a href=""><font 
-            size="4">카테고리 설정 &nbsp&nbsp</font> </a> <a href=""><font size="4">글 
-              작성 &nbsp&nbsp</font> </a> 
+          <a href="${pageContext.servletContext.contextPath }/blog/${authUser.id}/admin/basicsetting"><font size="4">기본설정 &nbsp&nbsp</font> </a> 
+          <a href=""><font size="4">카테고리 설정 &nbsp&nbsp</font> </a>
+          <a href="${pageContext.servletContext.contextPath }/blog/${authUser.id}/admin/basicsetting"><font size="4">글 작성 &nbsp&nbsp</font> </a> 
         </div> 
         <br> 
         <br> 
          
         <!-- TODO : multipart 추가 --> 
-        <form action="${pageContext.request.contextPath}/업로드할 경로" class="form-horizontal" name="blogSetting" method="post"> 
+        <form action="${pageContext.request.contextPath}/blog/${authUser.id}/admin/updatesetting" class="form-horizontal" name="blogSetting" 
+        	enctype="multipart/form-data" method="post"> 
  
           <div class="form-group"> 
             <label for="blogName" class="col-sm-3 control-label">블로그 
@@ -50,21 +51,19 @@
           </div> 
  
           <div class="form-group"> 
-            <label for="blogName" class="col-sm-3 control-label">로고 
-              이미지</label> 
+            <label for="blogName" class="col-sm-3 control-label">로고 이미지</label> 
             <div class="col-sm-6"> 
               <div name="child2" class="col-sm-6"> 
-                <!-- 로고 이미지 --> 
+              <input  type="file" name="logo"/>
               </div> 
               <BR> 
-              <button class="btn btn-default">파일 선택</button> 
             </div> 
           </div><br><br> 
            
           <div class="form-group"> 
           <div class="col-sm-3"></div> 
           <div class="col-sm-6"> 
-            <button class="btn btn-default">기본 설정 변경</button> 
+            <input class="btn btn-default" type="submit" value="기본 설정 변경"/> 
           </div> 
           </div> 
           <br> 

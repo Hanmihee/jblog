@@ -8,5 +8,12 @@
       WHERE  b.user_no = u.no AND u.id = #{id} 
     ]]> 
   </select> 
+  <update id="updateBlogNameAndLogo" parameterType="map" >
+   <![CDATA[ 
+   		UPDATE blog
+		SET title= #{title} , logo = #{logo}
+		WHERE user_no = (select no from users where id=#{id} )
+    ]]> 
+  </update>
 </mapper> 
  
