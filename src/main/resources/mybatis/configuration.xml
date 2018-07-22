@@ -3,13 +3,18 @@
 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<!-- 자동으로 카멜케이스 규칙으로 변환 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
 	<typeAliases>
 		<typeAlias alias="uservo" type="com.example.jblog.vo.UserVo" />
 		<typeAlias alias="blogvo" type="com.example.jblog.vo.BlogVo" />
+		<typeAlias alias="categoryvo" type="com.example.jblog.vo.CategoryVo" />
 	</typeAliases>
-
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/blog.xml" />
+		<mapper resource="mybatis/mappers/category.xml" />
 	</mappers>
 </configuration>

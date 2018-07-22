@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+	<insert id="insertCategory" parameterType="map">
+		<selectKey keyProperty="no" resultType="Long" order="BEFORE">
+			select
+			no FROM users WHERE id = #{id}
+		</selectKey> 
+		<![CDATA[ 
+    		INSERT INTO category(name,user_no,description) 
+    		VALUES( 
+      		#{name}, 
+    		#{no}, 
+    		#{description}
+    		) 
+    	]]>
+	</insert>
+	
+	<delete id="deleteCategory" parameterType="map">
+		<![CDATA[
+			DELETE FROM category
+			WHERE  no = #{no} AND user_no = ( SELECT no from users where id = #{id} )
+		]]>
+	</delete>
+	
+	<select id="selectCategory" parameterType="string"
+		resultType="categoryvo">
+		<![CDATA[
+			SELECT no, name, post_count, description
+			FROM category  
+			WHERE user_no = ( SELECT no from users where id = #{userId} )
+		]]>
+	</select>
+	
+</mapper>

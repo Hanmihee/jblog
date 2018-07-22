@@ -26,6 +26,9 @@
 
 	<mvc:resources location="/resources/img/" mapping="/img/**" />
 	
+	<!-- jquery -->
+     <mvc:resources location="/assets/js/jquery/" mapping="/jquery/**" />
+     
 	<!-- MessageSource -->
 	<beans:bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -44,4 +47,5 @@
 	<!-- Resources Mapping -->
 	<mvc:resources location="file:/logo/" mapping="/logo/**" />
 		
+
 </beans:beans>

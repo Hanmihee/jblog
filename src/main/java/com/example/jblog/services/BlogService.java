@@ -3,6 +3,7 @@ package com.example.jblog.services;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +12,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.jblog.repositories.BlogDao;
 import com.example.jblog.vo.BlogVo;
+import com.example.jblog.vo.CategoryVo;
 import com.example.jblog.vo.UserVo;
 
 @Service
 public class BlogService {
 
 	@Autowired
-	private BlogDao blogdao;
+	private BlogDao blogDao;
 
 	public BlogVo getBlogContent(String userId) {
-		return blogdao.getBlogById(userId);
+		return blogDao.getBlogById(userId);
 	}
 
 	public boolean updateBlogNameAndLogo(Map<String , String> blogMap) {
-		return blogdao.saveBlogNameAndLogo(blogMap);
+		return blogDao.saveBlogNameAndLogo(blogMap);
 	}
 	
 	private static String SAVE_PATH = "/logo";
@@ -62,5 +64,17 @@ public class BlogService {
 
 		fos.write(fileData); // 이미지를 upload 폴더에 넣어줌
 		fos.close();
+	}
+
+	public boolean addCategory(Map<String, Object> categoryMap) {
+		return blogDao.insertCategory(categoryMap);
+	}
+
+	public boolean deleteCategory(Map<String, Object> categoryMap) {
+		return blogDao.deleteCategory(categoryMap);
+	}
+
+	public List<CategoryVo> getCategoryList(String userId) {
+		return blogDao.selectCategory(userId);
 	}
 }
