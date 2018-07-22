@@ -11,6 +11,9 @@
   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> 
 <link rel="stylesheet" 
   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> 
+<script 
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> 
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 <title>HOME</title> 
@@ -32,45 +35,8 @@
         <br> 
         <br> 
          
-        <div class="col-sm-10">
-        <form:form action="${pageContext.request.contextPath}/blog/${authUser.id}/admin/boardwrite" class="form-horizontal" name="boardwriteForm" 
-        	method="post" modelAttribute="blogVo"> 
- 
-          <div class="form-group"> 
-            <label for="title" class="col-sm-3 control-label">제목</label> 
-              <div class="col-sm-6"> 
-                <input type="text" class="form-control" name="title" /> 
-              </div> 
-              <div class="col-sm-3"> 
-                <select name="categoryNo" class="selectpicker">
-   					<option value="0">카테고리 선택</option>
-    				<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
-						<option value="${category.no}">${ category.name }</option>
-					</c:forEach> 
-				</select>
-              </div> 
-          </div> 
- 
-          <div class="form-group"> 
-            <label for="content" class="col-sm-3 control-label">내용</label> 
-              <div class="col-sm-8"> 
-             <!-- textarea -->
-             <textarea id="content" style="overflow-y:auto;" name="content" class="form-control" rows="15" cols="65"></textarea>
-              <BR> 
-            </div> 
-          </div>
-           
-          <div class="form-group"> 
-          <div class="col-sm-3"></div> 
-          <div class="col-sm-6"> 
-            <input class="btn btn-default" type="submit" value="포스트 하기"/> 
-          </div> 
-          </div> 
-          <br> 
-          <br> 
- 
-        </form:form> 
-        </div>
+        게시글 업로드 성공
+        
         <div class="col-sm-1"></div> 
       </div> 
     </div> 

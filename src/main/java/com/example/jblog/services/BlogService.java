@@ -77,4 +77,8 @@ public class BlogService {
 	public List<CategoryVo> getCategoryList(String userId) {
 		return blogDao.selectCategory(userId);
 	}
+
+	public boolean writePost(Map<String, Object> postMap) {
+		return blogDao.insertPost(postMap);
+	}
 }

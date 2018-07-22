@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+	<insert id="insertPost" parameterType="map">
+		<selectKey keyProperty="no" resultType="Long" order="BEFORE">
+			select
+			no FROM users WHERE id = #{id}
+		</selectKey> 
+		<![CDATA[
+		INSERT INTO post(category_no,user_no,title,content,reg_date)
+		VALUES( #{categoryNo},
+			#{no},
+			#{title},
+			#{content},
+			now()
+		)
+		]]>
+	</insert>
+</mapper>

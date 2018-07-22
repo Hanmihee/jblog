@@ -37,4 +37,9 @@ public class BlogDao {
 	public List<CategoryVo> selectCategory(String userId) {
 		return sqlSession.selectList("category.selectCategory", userId);
 	}
+
+	public boolean insertPost(Map<String, Object> postMap) {
+		int count = sqlSession.insert("post.insertPost",postMap);
+		return count == 1;
+	}
 }

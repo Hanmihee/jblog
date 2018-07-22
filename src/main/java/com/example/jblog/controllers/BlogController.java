@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.jblog.services.BlogService;
 import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
+import com.example.jblog.vo.PostVo;
 
 @Controller
 @RequestMapping("/blog")
@@ -30,7 +32,9 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/{userId}/admin/boardwriteform", method = RequestMethod.GET)
-	public String moveBoardWrite() {
+	public String moveBoardWrite(Model model, @PathVariable("userId") String userId) {
+		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
+		model.addAttribute("categoryVo",categoryVo);
 		return "blog/boardwriteform";
 	}
 
@@ -41,11 +45,24 @@ public class BlogController {
 		return "blog/categorysetting";
 	}
 
-	@RequestMapping(value = "/{userId}/admin/boardwriteform", method = RequestMethod.POST)
-	public String boardWriteAction() {
-		// TODO
-		// 게시판 글쓰기 구현
-		return "";
+	@RequestMapping(value = "/{userId}/admin/boardwrite", method = RequestMethod.POST)
+	public String boardWriteAction(@PathVariable("userId") String userId,@ModelAttribute PostVo vo) {
+		Map<String, Object> postMap = new HashMap<String, Object>();
+		postMap.put("title", vo.getTitle());
+		System.out.println("title : "+vo.getTitle());
+		postMap.put("content", vo.getContent());
+		System.out.println("content : "+vo.getContent());
+		postMap.put("categoryNo", vo.getCategoryNo());
+		System.out.println("categoryNo : "+vo.getCategoryNo());
+		postMap.put("id", userId);
+		
+		boolean result = blogService.writePost(postMap);
+		
+		if(result) {
+		return "blog/postsuccess";
+		}else {
+			return "blog/postfail";
+		}
 	}
 	
 	@RequestMapping(value="/{userId}/admin/getCategoryList",method=RequestMethod.GET)

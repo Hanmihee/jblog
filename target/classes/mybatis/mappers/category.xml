@@ -31,5 +31,5 @@
 			WHERE user_no = ( SELECT no from users where id = #{userId} )
 		]]>
 	</select>
-	
+
 </mapper>
