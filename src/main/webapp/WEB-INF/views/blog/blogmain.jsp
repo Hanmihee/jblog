@@ -51,7 +51,7 @@
       		<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
       			<!-- TODO -->
       			<!-- 카테고리 눌렀을때 게시글 가져오기 -->
-      			<li><a href="">category.name</a></li>
+      			<li><a href="">${ category.name }</a></li>
 			</c:forEach> 
       	</ul>
       </div> 
