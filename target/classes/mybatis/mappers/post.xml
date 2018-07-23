@@ -16,7 +16,7 @@
 		)
 		]]>
 	</insert>
-	<select id="selectPostList" parameterType="string"
+	<select id="selectPostList" parameterType="map"
 		resultType="postvo">
 		  <![CDATA[ 
       		SELECT no , category_no, user_no, title , content, reg_date
@@ -25,10 +25,11 @@
       			select no
       			from users
       			where id = #{userId}
-      		) 
+      		) AND category_no = #{categoryNo}
     	  ]]>
 	</select>
-	<select id="selectPostOne" parameterType="string"
+	<!-- 가장 최신글을 가지고옴 -->
+	<select id="selectPostOne" parameterType="map"
 		resultType="postvo">
 		  <![CDATA[ 
       		SELECT no , category_no, user_no, title , content, reg_date
@@ -37,7 +38,7 @@
       			select no
       			from users
       			where id = #{userId}
-      		) 
+      		) AND category_no = #{categoryNo}
       		ORDER BY reg_date DESC
       		LIMIT 1;
     	  ]]>
@@ -54,6 +55,7 @@
       		) AND category_no = #{categoryNo}
     	  ]]>
 	</select>
+	<!-- 특정 번호의 post를 가지고옴 -->
 	<select id="selectPost" parameterType="map"
 		resultType="postvo">
 		  <![CDATA[ 
@@ -66,5 +68,36 @@
       		) AND no = #{no}
     	  ]]>
 	</select>
+	
+	<select id="selectPostOneFirst" parameterType="string"
+		resultType="postvo">
+		  <![CDATA[ 
+      		SELECT no , category_no, user_no, title , content, reg_date
+     		FROM post
+      		WHERE  user_no = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) 
+      		ORDER BY reg_date DESC
+      		LIMIT 1;
+    	  ]]>
+	</select>
+	<select id="selectPostListFirst" parameterType="string"
+		resultType="postvo">
+		  <![CDATA[ 
+      		SELECT no , category_no, user_no, title , content, reg_date
+     		FROM post
+      		WHERE  user_no = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) 
+    	  ]]>
+	</select>
 </mapper>
+
+
+
+
 

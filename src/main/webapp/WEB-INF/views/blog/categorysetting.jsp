@@ -77,7 +77,6 @@
 			            $("#commentList").empty();
 				         
 			          if(data.length > 0){
-			                
 			                for(i=0; i<data.length; i++){
 			                    html += "<tr><td>"+data[i].no+"</td>";
 			                    html += "	<td>"+data[i].name+"</td>";

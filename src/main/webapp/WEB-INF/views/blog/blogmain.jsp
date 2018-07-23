@@ -18,6 +18,9 @@
 <script language="javascript" type="text/javascript" 
   src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
   <script type="text/javascript">
+  	/*
+  	var postNo = ${postVo.no};
+  	
   	function getPostList(categoryno){
   		$.ajax({
   			url : "${pageContext.request.contextPath}/blog/${userId}/postList",
@@ -54,20 +57,89 @@
   			data : "no="+no,
   			dataType : "json",
   			success : function(data){
-  				console.log("title1 : ",data[0].title);
-				console.log("content1 : ",data[0].content);
 				
   				if(data.length > 0){
+  					getComment();
+  					postNo = data[0].no;
+  					
   					var html = "";
   					$("#post").empty();
-  					
-  					console.log("title : ",data[0].title);
-  					console.log("content : ",data[0].content);
   					
   					html += "<h3>"+data[0].title+"</h3>";
   					html += "<p>"+data[0].content+"</p>";
   					
   					$("#post").html(html);
+  				}
+  			},
+  			error : function(request,status,error){
+  				console.log("실패");
+  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
+  			}
+  		});
+  	}
+  	*/
+  	
+  	function addComment(){
+  		var content = $("#content").val();
+  		$.ajax({
+  			url : "${pageContext.request.contextPath}/blog/${authUser.id}/addcomment",
+  			type : "post",
+  			data : "content="+content+"&postno="+postNo,
+  			dataType : "json",
+  			success : function(data){
+				
+  				if(data.length > 0){
+  					var html = "";
+  					$("#commentList").empty();
+  					
+  					for(i=0; i<data.length; i++){
+  						html += "<label for='title' class='col-sm-2 control-label'>"+data[i].userName+"</label>";
+  						html += "<div class='col-sm-7'> ";
+  						html += "<p>"+data[i].content+"</p>";
+  						html += "</div> ";
+  						html += "<div class='col-sm-3'> ";
+  						html += "<p>"+data[i].regDate+"</p>";
+  						html += "</div> <br>";
+  						html += "</div>";
+  					}
+  					
+  					$("#commentList").html(html);
+  					$("#content").val("");
+  				}
+  			},
+  			error : function(request,status,error){
+  				console.log("실패");
+  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
+  			}
+  		});
+  	}
+  	
+  	function getComment(){
+  		$.ajax({
+  			url : "${pageContext.request.contextPath}/blog/${authUser.id}/getComment",
+  			type : "post",
+  			data : "postno="+postNo,
+  			dataType : "json",
+  			success : function(data){
+				
+  				if(data.length > 0){
+  					console.log("성공?");
+  					var html = "";
+  					$("#commentList").empty();
+  					
+  					for(i=0; i<data.length; i++){
+  						html += "<label for='title' class='col-sm-2 control-label'>"+data[i].userName+"</label>";
+  						html += "<div class='col-sm-7'> ";
+  						html += "<p>"+data[i].content+"</p>";
+  						html += "</div> ";
+  						html += "<div class='col-sm-3'> ";
+  						html += "<p>"+data[i].regDate+"</p>";
+  						html += "</div> <br>";
+  						html += "</div>";
+  					}
+  					
+  					$("#commentList").html(html);
+  					$("#content").val("");
   				}
   			},
   			error : function(request,status,error){
@@ -90,8 +162,7 @@
  
     <div class="col-sm-7"> 
       <div id="post">
-      	<!-- TODO  -->
-      	<!-- 게시글 분기처리  : 게시글이 있을때와 아무것도 없을때.-->
+      <!-- 게시글 -->
       	<c:choose>
       	<c:when test="${empty postVo }">
       		<p>등록된 게시글이 존재하지 않습니다.</p>
@@ -103,28 +174,26 @@
       </c:choose>
 	  </div> 
 	  
+    <!-- 댓글 -->
+     
+	<c:if test="${!empty authUser }">
+			
 	  <hr style="border:solid 0.3px black;">
-	  
-      <!-- 댓글 -->
-         <label for="title" class="col-sm-2 control-label">${authUser.name}</label>
+      
+         <label class="col-sm-2 control-label">${authUser.name}</label>
          <div class="col-sm-8"> 
-            <input type="text" class="form-control" name="comment" /> 
+            <input type="text" class="form-control" id="content" /> 
          </div> 
          <div class="col-sm-2"> 
-            <input type="button" class="form-control" name="save" value="저장"/>     
+            <input type="button" onclick="addComment(${postVo.no})"class="form-control" name="save" value="저장"/>     
          </div> <br>
       
       <hr>
       
-      <!-- TODO -->
       <!-- comment 구현 -->
-      <!--
-      	1. comment 리스트 불러오기 처리 
-      	2. ajax 처리 
-      -->
       <div id="commentList">
       	<c:forEach var="comment" items="${commentVo}" varStatus="Loop">
-      		<label for="title" class="col-sm-2 control-label">${comment.name}</label>
+      		<label class="col-sm-2 control-label">${comment.userName}</label>
          	<div class="col-sm-7"> 
             	<p>${comment.content}</p>
          	</div> 
@@ -133,6 +202,7 @@
          	</div> <br>
       	</c:forEach>
       </div>
+	</c:if>
       
       <hr style="border:solid 0.5px black;">
       
@@ -164,10 +234,10 @@
       <br>
       <div>
       	<ul>
+      	<!-- 카테고리 -->
+      	<!-- TODO: 컨트롤러로 넘기기 -->
       		<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
-      			<!-- TODO -->
-      			<!-- 카테고리 눌렀을때 게시글 가져오기 -->
-      			<li><p onclick="getPostList(${category.no})">${ category.name }</p></li>
+      			<li><a href="${pageContext.request.contextPath }/blog/category/${userId}/${category.no}">${ category.name }</a></li>
 			</c:forEach> 
       	</ul>
       </div> 

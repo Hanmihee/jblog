@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.jblog.repositories.BlogDao;
 import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
+import com.example.jblog.vo.CommentVo;
 import com.example.jblog.vo.PostVo;
 import com.example.jblog.vo.UserVo;
 
@@ -83,12 +84,12 @@ public class BlogService {
 		return blogDao.insertPost(postMap);
 	}
 
-	public List<PostVo> getPostList(String userId) {
-		return blogDao.selectPostList(userId);
+	public List<PostVo> getPostList(Map<String, Object> postMap) {
+		return blogDao.selectPostList(postMap);
 	}
 
-	public PostVo getPost(String userId) {
-		return blogDao.selectOnePost(userId);
+	public PostVo getPostNewest(Map<String, Object> postMap) {
+		return blogDao.selectOnePost(postMap);
 	}
 
 	public List<PostVo> getCategoryPostList(Map<String, Object> postMap) {
@@ -97,5 +98,21 @@ public class BlogService {
 
 	public List<PostVo> getPost(Map<String, Object> postMap) {
 		return blogDao.selectPost(postMap);
+	}
+
+	public List<CommentVo> getCommentList(Map<String, Object> commentMap) {
+		return blogDao.selectCommentList(commentMap);
+	}
+
+	public List<CommentVo> getComments(Long no) {
+		return blogDao.getComments(no);
+	}
+
+	public List<PostVo> getPostListFirst(String userId){
+		return blogDao.getPostListFirst(userId);
+	}
+
+	public PostVo getPostNewestFirst(String userId) {
+		return blogDao.getPostNewwstFirst(userId);
 	}
 }

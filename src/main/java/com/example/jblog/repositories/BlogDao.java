@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
+import com.example.jblog.vo.CommentVo;
 import com.example.jblog.vo.PostVo;
 
 @Repository
@@ -52,12 +53,12 @@ public class BlogDao {
 		return count == 1;
 	}
 
-	public List<PostVo> selectPostList(String userId) {
-		return sqlSession.selectList("post.selectPostList",userId);
+	public List<PostVo> selectPostList(Map<String, Object> postMap) {
+		return sqlSession.selectList("post.selectPostList",postMap);
 	}
 
-	public PostVo selectOnePost(String userId) {
-		return sqlSession.selectOne("post.selectPostOne", userId);
+	public PostVo selectOnePost(Map<String, Object> postMap) {
+		return sqlSession.selectOne("post.selectPostOne", postMap);
 	}
 
 	public List<PostVo> selectCategoryPostList(Map<String, Object> postMap) {
@@ -66,5 +67,23 @@ public class BlogDao {
 
 	public List<PostVo> selectPost(Map<String, Object> postMap) {
 		return sqlSession.selectList("post.selectPost",postMap);
+	}
+
+	public List<CommentVo> selectCommentList(Map<String, Object> commentMap) {
+		int count = sqlSession.insert("comment.insertComment",commentMap);
+		
+		return sqlSession.selectList("comment.selectCommentList",commentMap);
+	}
+
+	public List<CommentVo> getComments(Long no) {
+		return sqlSession.selectList("comment.selectComments",no);
+	}
+
+	public List<PostVo> getPostListFirst(String userId) {
+		return sqlSession.selectList("post.selectPostListFirst",userId);
+	}
+
+	public PostVo getPostNewwstFirst(String userId) {
+		return sqlSession.selectOne("post.selectPostOneFirst", userId);
 	}
 }
