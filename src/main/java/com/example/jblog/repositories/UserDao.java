@@ -16,7 +16,12 @@ public class UserDao {
 	
 	public int insertUser(UserVo vo) {
 		int count = sqlSession.insert("user.insert",vo);
-		sqlSession.insert("user.insertBlog",vo); 
+		
+		Map<String,Object> blogMap = new HashMap<String,Object>();
+		blogMap.put("id",vo.getId());
+		blogMap.put("blogName",vo.getName()+"의 블로그 입니다.");
+		sqlSession.insert("user.insertBlog",blogMap); 
+		
 		return count;
 	}
 

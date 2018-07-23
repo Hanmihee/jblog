@@ -16,4 +16,16 @@
 		)
 		]]>
 	</insert>
+	<select id="selectPost" parameterType="string"
+		resultType="postvo">
+		  <![CDATA[ 
+      		SELECT no , category_no, user_no, title , content, reg_date
+     		FROM post
+      		WHERE  user_no = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) 
+    	  ]]>
+	</select>
 </mapper>

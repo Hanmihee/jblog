@@ -12,15 +12,14 @@
 		)
 		]]>
 	</insert>
-	<insert id="insertBlog" parameterType="uservo">
+	<insert id="insertBlog" parameterType="map">
 		<selectKey keyProperty="no" resultType="Long" order="BEFORE">
 			select
 			no FROM users WHERE id = #{id}
 		</selectKey> 
     <![CDATA[ 
     INSERT INTO blog(user_no,title) 
-    VALUES( #{no}, 
-      #{name} 
+    VALUES( #{no}, #{blogName}
     ) 
     ]]>
 	</insert>

@@ -15,5 +15,19 @@
 		WHERE user_no = (select no from users where id=#{id} )
     ]]> 
   </update>
+   <update id="updateBlogName" parameterType="map" >
+   <![CDATA[ 
+   		UPDATE blog
+		SET title= #{title} 
+		WHERE user_no = (select no from users where id=#{id} )
+    ]]> 
+  </update>
+   <update id="updateBlogLogo" parameterType="map" >
+   <![CDATA[ 
+   		UPDATE blog
+		SET logo = #{logo}
+		WHERE user_no = (select no from users where id=#{id} )
+    ]]> 
+  </update>
 </mapper> 
  

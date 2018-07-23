@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.jblog.repositories.BlogDao;
 import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
+import com.example.jblog.vo.PostVo;
 import com.example.jblog.vo.UserVo;
 
 @Service
@@ -80,5 +81,9 @@ public class BlogService {
 
 	public boolean writePost(Map<String, Object> postMap) {
 		return blogDao.insertPost(postMap);
+	}
+
+	public List<PostVo> getPostList(String userId) {
+		return blogDao.selectPost(userId);
 	}
 }

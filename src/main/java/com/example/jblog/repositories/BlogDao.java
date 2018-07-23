@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
+import com.example.jblog.vo.PostVo;
 
 @Repository
 public class BlogDao {
@@ -20,7 +21,15 @@ public class BlogDao {
 	}
 
 	public boolean saveBlogNameAndLogo(Map<String , String> blogMap) {
-		int count = sqlSession.update("blog.updateBlogNameAndLogo",blogMap);
+		int count;
+		
+		if(blogMap.get("logo")==null) {
+			count = sqlSession.update("blog.updateBlogName",blogMap);
+		}else if(blogMap.get("title")==null) {
+			count = sqlSession.update("blog.updateBlogLogo",blogMap);
+		}else {
+			count = sqlSession.update("blog.updateBlogNameAndLogo",blogMap);
+		}
 		return count == 1;
 	}
 
@@ -41,5 +50,9 @@ public class BlogDao {
 	public boolean insertPost(Map<String, Object> postMap) {
 		int count = sqlSession.insert("post.insertPost",postMap);
 		return count == 1;
+	}
+
+	public List<PostVo> selectPost(String userId) {
+		return sqlSession.selectList("post.selectPost",userId);
 	}
 }

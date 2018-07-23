@@ -29,22 +29,32 @@
     <div class="col-sm-1"></div> 
  
     <div class="col-sm-7"> 
-      <div>게시글 내용</div> 
+      <div>
+      	
+	  </div> 
       <div>댓글</div> 
       <div>게시글 목록</div> 
     </div> 
  
     <div class="col-sm-3"> 
-    	<!-- 로고 분기처리 -->
       <c:choose>
-      	<c:when test="${empty blog.logo }">
+      	<c:when test="${empty blogVo.logo }">
       		<div><img src="${pageContext.request.contextPath }/img/default_logo.png"></div>
       	</c:when>
       	<c:otherwise>
-      		<div><img src="${pageContext.request.contextPath }/logo/${blog.logo}"></div>
+      		<div><img src="${pageContext.request.contextPath }/logo/${blogVo.logo}"></div>
       	</c:otherwise>
       </c:choose>
-      <div>내 카테고리</div> 
+      <br>
+      <div>
+      	<ul>
+      		<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
+      			<!-- TODO -->
+      			<!-- 카테고리 눌렀을때 게시글 가져오기 -->
+      			<li><a href="">category.name</a></li>
+			</c:forEach> 
+      	</ul>
+      </div> 
     </div> 
  
     <div class="col-sm-1"></div> 

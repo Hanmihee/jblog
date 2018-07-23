@@ -29,7 +29,7 @@
 <body> 
 <div class="container"> 
   <div class="jumbotron" id="jumbo">  
-    <center><h2>${blog.title}</h2></center> 
+   <center><h2>${blogVo.title}</h2></center>
   </div> 
   <div align="right"> 
     <nav class="main_nav"> 
