@@ -84,6 +84,14 @@ public class BlogService {
 	}
 
 	public List<PostVo> getPostList(String userId) {
-		return blogDao.selectPost(userId);
+		return blogDao.selectPostList(userId);
+	}
+
+	public PostVo getPost(String userId) {
+		return blogDao.selectOnePost(userId);
+	}
+
+	public List<PostVo> getCategoryPostList(Map<String, Object> postMap) {
+		return blogDao.selectCategoryPostList(postMap);
 	}
 }

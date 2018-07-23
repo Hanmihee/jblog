@@ -16,7 +16,7 @@
 		)
 		]]>
 	</insert>
-	<select id="selectPost" parameterType="string"
+	<select id="selectPostList" parameterType="string"
 		resultType="postvo">
 		  <![CDATA[ 
       		SELECT no , category_no, user_no, title , content, reg_date
@@ -26,6 +26,32 @@
       			from users
       			where id = #{userId}
       		) 
+    	  ]]>
+	</select>
+	<select id="selectPostOne" parameterType="string"
+		resultType="postvo">
+		  <![CDATA[ 
+      		SELECT no , category_no, user_no, title , content, reg_date
+     		FROM post
+      		WHERE  user_no = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) 
+      		ORDER BY reg_date DESC
+      		LIMIT 1;
+    	  ]]>
+	</select>
+	<select id="selectCategoryPost" parameterType="map"
+		resultType="postvo">
+		  <![CDATA[ 
+      		SELECT no , category_no, user_no, title , content, reg_date
+     		FROM post
+      		WHERE  user_no = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) AND category_no = #{categoryNo}
     	  ]]>
 	</select>
 </mapper>

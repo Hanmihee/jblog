@@ -17,6 +17,36 @@
 <title>HOME</title> 
 <script language="javascript" type="text/javascript" 
   src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
+  <script type="text/javascript">
+  	function getPostList(categoryno){
+  		$.ajax({
+  			url : "${pageContext.request.contextPath}/blog/${userId}/postList",
+  			type : "post",
+  			data : "categoryno="+categoryno,
+  			dataType : "json",
+  			success : function(data){
+  				
+  				if(data.length > 0){
+  					var html ="";
+  					$("#postList").empty();
+  					for(i=0; i<data.length; i++){
+  						html += "<div class='col-sm-9'>";
+  						html += "<p onclick='getPost("+data[i].no+")'>"+data[i].title+"</p>";
+  						html += "</div>";
+  						html += "<div class='col-sm-3'> ";
+  						html += "<p>"+data[i].regDate+"</p>";
+  						html += "</div><br>";
+  					}
+  					$("#postList").html(html);
+  				}
+  			},
+  			error : function(request,status,error){
+  				console.log("실패");
+  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
+  			}
+  		});
+  	}
+  </script>
 </head> 
 <body> 
   <div class="container"> 
@@ -30,10 +60,68 @@
  
     <div class="col-sm-7"> 
       <div>
-      	
+      	<!-- TODO  -->
+      	<!-- 게시글 분기처리  : 게시글이 있을때와 아무것도 없을때.-->
+      	<c:choose>
+      	<c:when test="${empty postVo }">
+      		<p>등록된 게시글이 존재하지 않습니다.</p>
+      	</c:when>
+      	<c:otherwise>
+      		<h3>${postVo.title}</h3>
+      		<p>${postVo.content }</p>
+      	</c:otherwise>
+      </c:choose>
 	  </div> 
-      <div>댓글</div> 
-      <div>게시글 목록</div> 
+	  
+	  <hr style="border:solid 0.3px black;">
+	  
+      <!-- 댓글 -->
+         <label for="title" class="col-sm-2 control-label">${authUser.name}</label>
+         <div class="col-sm-8"> 
+            <input type="text" class="form-control" name="comment" /> 
+         </div> 
+         <div class="col-sm-2"> 
+            <input type="button" class="form-control" name="save" value="저장"/>     
+         </div> <br>
+      
+      <hr>
+      
+      <!-- TODO -->
+      <!-- comment 구현 -->
+      <!--
+      	1. comment 리스트 불러오기 처리 
+      	2. ajax 처리 
+      -->
+      <div id="commentList">
+      	<c:forEach var="comment" items="${commentVo}" varStatus="Loop">
+      		<label for="title" class="col-sm-2 control-label">${comment.name}</label>
+         	<div class="col-sm-7"> 
+            	<p>${comment.content}</p>
+         	</div> 
+         	<div class="col-sm-3"> 
+            	<p>${comment.regDate }</p>
+         	</div> <br>
+      	</c:forEach>
+      </div>
+      
+      <hr style="border:solid 0.5px black;">
+      
+      <div>
+	  <!-- TODO : 게시글 목록 가져오기 -->
+	  <!-- ajax 처리 -->
+       <div id="postList">  
+       	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
+         	<div class="col-sm-9"> 
+            	<p onclick="getPost(${post.no})">${post.title }</p>
+         	</div> 
+         	<div class="col-sm-3"> 
+            	<p>${post.regDate}</p>
+         	</div><br>
+        </c:forEach>
+        </div>
+	  </div>
+      <hr> 
+    
     </div> 
  
     <div class="col-sm-3"> 
@@ -51,7 +139,7 @@
       		<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
       			<!-- TODO -->
       			<!-- 카테고리 눌렀을때 게시글 가져오기 -->
-      			<li><a href="">${ category.name }</a></li>
+      			<li><p onclick="getPostList(${category.no})">${ category.name }</p></li>
 			</c:forEach> 
       	</ul>
       </div> 

@@ -59,7 +59,7 @@ public class BlogController {
 		boolean result = blogService.writePost(postMap);
 
 		if (result) {
-			return "blog/postsuccess";
+			return "redirect:/blog/"+userId+"/boardwriteform";
 		} else {
 			return "blog/postfail";
 		}
@@ -112,15 +112,15 @@ public class BlogController {
 		BlogVo blogVo = blogService.getBlogContent(userId);
 		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
 		List<PostVo> postListVo = blogService.getPostList(userId);
-		// TODO : 맨 위에 글 가져오기
-		// PostVo postVo = blogService.getPost();
+		PostVo postVo = blogService.getPost(userId);
 
 		if (blogVo != null) {
 			// 이름이 존재함
 			model.addAttribute("blogVo", blogVo);
 			model.addAttribute("categoryVo", categoryVo);
 			model.addAttribute("postListVo", postListVo);
-			// model.addAttribute("postVo", postVo);
+			model.addAttribute("postVo", postVo);
+			model.addAttribute("userId",userId);
 
 			// TODO : 코멘트 VO 가져오기
 			
@@ -137,14 +137,10 @@ public class BlogController {
 		String saveFilename;
 		Map<String, String> blogMap = new HashMap<String, String>();
 
-		if (logoImg == null && blogName == null) {
+		if (logoImg.isEmpty() && blogName.isEmpty()) {
 			return "redirect:/blog/basicsetting";
 		}
 		
-		
-		System.out.println("logoImg : "+logoImg);
-		System.out.println("blogName : "+blogName);
-
 		// 이미지 파일 처리
 		if (!(logoImg.isEmpty())) {
 			saveFilename = blogService.updateSetting(logoImg);
@@ -162,9 +158,19 @@ public class BlogController {
 		boolean result = blogService.updateBlogNameAndLogo(blogMap);
 
 		if (result) {
-			return "blog/updatesuccess";
+			return "redirect:/blog/basicsetting";
 		} else {
 			return "blog/updateFail";
 		}
+	}
+	
+	@RequestMapping(value="/{userId}/postList",method=RequestMethod.POST)
+	@ResponseBody
+	public List<PostVo> getPostList(@PathVariable("userId") String userId, @RequestParam("categoryno") String categoryNo){
+		Map<String, Object> postMap = new HashMap<String, Object>();
+		postMap.put("userId", userId);
+		postMap.put("categoryNo", categoryNo);
+		
+		return blogService.getCategoryPostList(postMap);
 	}
 }

@@ -52,7 +52,15 @@ public class BlogDao {
 		return count == 1;
 	}
 
-	public List<PostVo> selectPost(String userId) {
-		return sqlSession.selectList("post.selectPost",userId);
+	public List<PostVo> selectPostList(String userId) {
+		return sqlSession.selectList("post.selectPostList",userId);
+	}
+
+	public PostVo selectOnePost(String userId) {
+		return sqlSession.selectOne("post.selectPostOne", userId);
+	}
+
+	public List<PostVo> selectCategoryPostList(Map<String, Object> postMap) {
+		return sqlSession.selectList("post.selectCategoryPost",postMap);
 	}
 }
