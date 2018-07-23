@@ -54,4 +54,17 @@
       		) AND category_no = #{categoryNo}
     	  ]]>
 	</select>
+	<select id="selectPost" parameterType="map"
+		resultType="postvo">
+		  <![CDATA[ 
+      		SELECT no , category_no, user_no, title , content, reg_date
+     		FROM post
+      		WHERE  user_no = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) AND no = #{no}
+    	  ]]>
+	</select>
 </mapper>
+

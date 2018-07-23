@@ -63,4 +63,8 @@ public class BlogDao {
 	public List<PostVo> selectCategoryPostList(Map<String, Object> postMap) {
 		return sqlSession.selectList("post.selectCategoryPost",postMap);
 	}
+
+	public List<PostVo> selectPost(Map<String, Object> postMap) {
+		return sqlSession.selectList("post.selectPost",postMap);
+	}
 }

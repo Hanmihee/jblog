@@ -46,6 +46,36 @@
   			}
   		});
   	}
+  	
+  	function getPost(no){
+  		$.ajax({
+  			url : "${pageContext.request.contextPath}/blog/${userId}/post",
+  			type : "post",
+  			data : "no="+no,
+  			dataType : "json",
+  			success : function(data){
+  				console.log("title1 : ",data[0].title);
+				console.log("content1 : ",data[0].content);
+				
+  				if(data.length > 0){
+  					var html = "";
+  					$("#post").empty();
+  					
+  					console.log("title : ",data[0].title);
+  					console.log("content : ",data[0].content);
+  					
+  					html += "<h3>"+data[0].title+"</h3>";
+  					html += "<p>"+data[0].content+"</p>";
+  					
+  					$("#post").html(html);
+  				}
+  			},
+  			error : function(request,status,error){
+  				console.log("실패");
+  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
+  			}
+  		});
+  	}
   </script>
 </head> 
 <body> 
@@ -59,7 +89,7 @@
     <div class="col-sm-1"></div> 
  
     <div class="col-sm-7"> 
-      <div>
+      <div id="post">
       	<!-- TODO  -->
       	<!-- 게시글 분기처리  : 게시글이 있을때와 아무것도 없을때.-->
       	<c:choose>
@@ -107,8 +137,6 @@
       <hr style="border:solid 0.5px black;">
       
       <div>
-	  <!-- TODO : 게시글 목록 가져오기 -->
-	  <!-- ajax 처리 -->
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
          	<div class="col-sm-9"> 

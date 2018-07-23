@@ -94,4 +94,8 @@ public class BlogService {
 	public List<PostVo> getCategoryPostList(Map<String, Object> postMap) {
 		return blogDao.selectCategoryPostList(postMap);
 	}
+
+	public List<PostVo> getPost(Map<String, Object> postMap) {
+		return blogDao.selectPost(postMap);
+	}
 }

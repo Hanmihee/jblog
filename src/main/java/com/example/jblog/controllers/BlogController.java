@@ -166,11 +166,21 @@ public class BlogController {
 	
 	@RequestMapping(value="/{userId}/postList",method=RequestMethod.POST)
 	@ResponseBody
-	public List<PostVo> getPostList(@PathVariable("userId") String userId, @RequestParam("categoryno") String categoryNo){
+	public List<PostVo> getCategoryPostList(@PathVariable("userId") String userId, @RequestParam("categoryno") String categoryNo){
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		postMap.put("userId", userId);
 		postMap.put("categoryNo", categoryNo);
 		
 		return blogService.getCategoryPostList(postMap);
+	}
+	
+	@RequestMapping(value="/{userId}/post",method=RequestMethod.POST)
+	@ResponseBody
+	public List<PostVo> getPost(@PathVariable("userId") String userId, @RequestParam("no") String no){
+		Map<String, Object> postMap = new HashMap<String, Object>();
+		postMap.put("userId", userId);
+		postMap.put("no", no);
+		
+		return blogService.getPost(postMap);
 	}
 }
