@@ -29,6 +29,7 @@
 			SELECT c.no, c.name, (select count(*) from post p where user_no = u.no and p.category_no=c.no) as postCount, c.description 
 			FROM category c, users u
 			WHERE u.id = #{userId} AND u.no = c.user_no
+			ORDER BY c.no DESC
 		]]>
 	</select>
 

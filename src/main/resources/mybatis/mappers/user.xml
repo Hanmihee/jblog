@@ -19,8 +19,7 @@
 		</selectKey> 
     <![CDATA[ 
     INSERT INTO blog(user_no,title) 
-    VALUES( #{no}, #{blogName}
-    ) 
+    VALUES( #{no}, #{blogName} )
     ]]>
 	</insert>
 	<select id="selectUserById" parameterType="string"
@@ -39,4 +38,17 @@
 			WHERE id = #{id} AND password = #{password}
 		]]>
 	</select>
+	<insert id="insertDefaultCategory" parameterType="map">
+		<selectKey keyProperty="no" resultType="Long" order="BEFORE">
+			select
+			no FROM users WHERE id = #{id}
+		</selectKey> 
+    <![CDATA[ 
+    	INSERT INTO category(name,user_no,description) 
+    	VALUES( #{name},#{no},#{description} )
+    ]]>
+	</insert>
 </mapper>
+
+
+

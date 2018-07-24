@@ -60,7 +60,7 @@ public class BlogController {
 		boolean result = blogService.writePost(postMap);
 
 		if (result) {
-			return "redirect:/blog/" + userId + "/boardwriteform";
+			return "redirect:/blog/" + userId + "/admin/boardwriteform";
 		} else {
 			return "blog/postfail";
 		}
@@ -211,7 +211,8 @@ public class BlogController {
 	@RequestMapping(value = "/category/{userId}/{categoryNo}", method = RequestMethod.GET)
 	public String moveCategory(@PathVariable("userId") String userId, @PathVariable("categoryNo") Long no,
 			Model model) {
-
+		List<CommentVo> commentVo;
+		
 		BlogVo blogVo = blogService.getBlogContent(userId);
 		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
 
@@ -221,8 +222,12 @@ public class BlogController {
 
 		List<PostVo> postListVo = blogService.getPostList(postMap); // 수정필요
 		PostVo postVo = blogService.getPostNewest(postMap); // 수정 필요
-		List<CommentVo> commentVo = blogService.getComments(postVo.getNo());
-
+		
+		if(postVo != null) {
+			commentVo = blogService.getComments(postVo.getNo());
+			model.addAttribute("commentVo", commentVo);
+		}
+		
 		if (blogVo != null) {
 			// 이름이 존재함
 			model.addAttribute("blogVo", blogVo);
@@ -230,7 +235,6 @@ public class BlogController {
 			model.addAttribute("postListVo", postListVo);
 			model.addAttribute("postVo", postVo);
 			model.addAttribute("userId", userId);
-			model.addAttribute("commentVo", commentVo);
 
 			return "blog/blogmain";
 		} else {

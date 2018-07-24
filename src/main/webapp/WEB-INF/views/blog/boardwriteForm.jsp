@@ -42,8 +42,7 @@
                 <input type="text" class="form-control" name="title" /> 
               </div> 
               <div class="col-sm-3"> 
-                <select name="categoryNo" class="selectpicker">
-   					<option value="0">카테고리 선택</option>
+                <select name="categoryNo" class="selectpicker" >
     				<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
 						<option value="${category.no}">${ category.name }</option>
 					</c:forEach> 

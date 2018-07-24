@@ -43,7 +43,9 @@
 		});
 	}  
 			
-	function deleteCategory(no){
+	function deleteCategory(no,postNo){
+		
+		if(postNo == 0){
 				$.ajax({
 					url : "${pageContext.request.contextPath}/blog/${authUser.id}/admin/categorydelete",
 					type : "POST",
@@ -61,6 +63,9 @@
 						
 					}
 				});
+		}else{
+			alert("카테고리를 삭제할 수 없습니다.");
+		}
 	}
 			
 	function getCategoryList(){
@@ -82,7 +87,7 @@
 			                    html += "	<td>"+data[i].name+"</td>";
 			                    html += "	<td>"+data[i].postCount+"</td>";
 			                    html += "	<td>"+data[i].description+"</td>";
-				   				html += "	<td><button class='btn btn-delfault' onclick='deleteCategory("+data[i].no+")'>삭제</button></td></tr>";
+				   				html += "	<td><button class='btn btn-delfault' onclick='deleteCategory("+data[i].no+","+data[i].postCount+")'>삭제</button></td></tr>";
 			                }
 			            }  
 			            $("#commentList").html(html);
