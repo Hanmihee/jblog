@@ -81,44 +81,6 @@
 			}
 		});
   }
-  
-/*   	function addComment(postNo){
-  		var content = $("#content").val();
-  		var userName = "${authUser.name}";
-  		var a;
-  		$.ajax({
-  			url : "${pageContext.request.contextPath}/blog/${authUser.id}/addcomment",
-  			type : "post",
-  			data : "content="+content+"&postno="+postNo,
-  			dataType : "json",
-  			success : function(data){
-				console.log("성공했나?");
-  				
-  					var html = "";
-  					console.log("data 받아왔나?");
-  						html += "<label for='title' class='col-sm-2 control-label'>"+userName+"</label>";
-  						html += "<div class='col-sm-6'> ";
-  						html += "<p>"+content+"</p>";
-  						html += "</div> ";
-  						html += "<div class='col-sm-3'> ";
-  						html += "<p>"+data.regDate+"</p>";
-  						html += "</div> <br>";
-  						html += "</div>";
-  						html += "<div class='col-sm-1'> ";
-						html += "<button>X</button>";
-						html += "</div> ";
-  					
-  					
-  					$("#commentList").html(html);
-  					$("#content").val("");
-  			},
-  			error : function(request,status,error){
-  				console.log("실패");
-  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
-  			}
-  		});
-  	} */
-
   	function getComment(postNo){
   		var userId = "${authUser.id}";
   		$.ajax({
@@ -171,7 +133,6 @@
       <c:import url="/WEB-INF/views/includes/blogheader.jsp" /> 
     </div> 
   </div> 
-  <br> 
   <div class="row"> 
     <div class="col-sm-1"></div> 
  
@@ -188,12 +149,12 @@
       	</c:otherwise>
       </c:choose>
 	  </div> 
+	  <hr style="border:solid 0.3px black;">
 	  
     <!-- 댓글 -->
      
 	<c:if test="${!empty authUser }">
 		<c:if test="${!empty postVo}">	
-	  <hr style="border:solid 0.3px black;">
       
          <label class="col-sm-2 control-label">${authUser.name}</label>
          <div class="col-sm-8"> 
@@ -259,6 +220,7 @@
       </c:choose>
       <br>
       <div>
+      	<a href="${pageContext.servletContext.contextPath }/blog/${userId}"><h4>카테고리</h4></a>
       	<ul>
       		<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
       			<li><a href="${pageContext.request.contextPath }/blog/category/${userId}/${category.no}">${ category.name }</a></li>

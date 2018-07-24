@@ -45,9 +45,10 @@
 					<!-- TODO -->
 					<!-- 사용자 자신의 블로그일때만 블로그 관리가 뜨드록 설정 -->
 					<ul>
-						<li><a
-							href="${pageContext.servletContext.contextPath }/blog/${authUser.id}/admin/basicsetting">내
-								블로그 관리&nbsp&nbsp</a></li>
+						<c:if test="${ authUser.id eq userId }"> 
+							<li><a href="${pageContext.servletContext.contextPath }/blog/${authUser.id}/admin/basicsetting">
+																									내블로그 관리&nbsp&nbsp</a></li>
+						</c:if>
 						<li><a
 							href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a></li>
 					</ul>

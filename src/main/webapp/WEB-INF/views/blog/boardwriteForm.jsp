@@ -41,7 +41,7 @@
               <div class="col-sm-6"> 
                 <input type="text" class="form-control" name="title" /> 
               </div> 
-              <div class="col-sm-3"> 
+              <div class="col-sm-2"> 
                 <select class="form-control" name="categoryNo" class="selectpicker" >
     				<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
 						<option value="${category.no}">${ category.name }</option>
