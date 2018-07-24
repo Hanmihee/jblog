@@ -26,6 +26,11 @@ import com.example.jblog.vo.UserVo;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@RequestMapping(value = "/warning", method = RequestMethod.GET)
+	public String moveWarning() {
+		return "user/warning";
+	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String moveJoinForm(@ModelAttribute UserVo vo) {

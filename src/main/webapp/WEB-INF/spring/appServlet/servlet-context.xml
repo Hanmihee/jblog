@@ -47,5 +47,12 @@
 	<!-- Resources Mapping -->
 	<mvc:resources location="file:/logo/" mapping="/logo/**" />
 		
+	<!-- INTERCEPTORS -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" /> <!-- /** : /* 가 몇개가 되던 상관없이 다들어옴. -->
+			<beans:bean class="com.example.jblog.security.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans:beans>

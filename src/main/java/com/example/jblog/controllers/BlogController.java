@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.jblog.security.Auth;
 import com.example.jblog.services.BlogService;
 import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
@@ -27,11 +28,13 @@ public class BlogController {
 	@Autowired
 	private BlogService blogService;
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/basicsetting", method = RequestMethod.GET)
 	public String moveBasicSetting() {
 		return "blog/basicsetting";
 	}
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/boardwriteform", method = RequestMethod.GET)
 	public String moveBoardWrite(Model model, @PathVariable("userId") String userId) {
 		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
@@ -39,6 +42,7 @@ public class BlogController {
 		return "blog/boardwriteform";
 	}
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/categorysetting", method = RequestMethod.GET)
 	public String moveCategorySetting(Model model, @PathVariable("userId") String userId) {
 		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
@@ -46,6 +50,7 @@ public class BlogController {
 		return "blog/categorysetting";
 	}
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/boardwrite", method = RequestMethod.POST)
 	public String boardWriteAction(@PathVariable("userId") String userId, @ModelAttribute PostVo vo) {
 		Map<String, Object> postMap = new HashMap<String, Object>();
@@ -66,12 +71,14 @@ public class BlogController {
 		}
 	}
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/getCategoryList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CategoryVo> getCategoryList(@PathVariable("userId") String userId) {
 		return blogService.getCategoryList(userId);
 	}
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/categoryadd", method = RequestMethod.POST)
 	@ResponseBody
 	public Object addCategory(@PathVariable("userId") String userId, @RequestParam("name") String name,
@@ -91,6 +98,7 @@ public class BlogController {
 		return map;
 	}
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/categorydelete", method = RequestMethod.POST)
 	@ResponseBody
 	public Object deleteCategory(@PathVariable("userId") String userId, @RequestParam("no") String no) {
@@ -137,6 +145,7 @@ public class BlogController {
 		}
 	}
 
+	@Auth
 	@RequestMapping(value = "/{userId}/admin/updatesetting", method = RequestMethod.POST)
 	public String updateSetting(@PathVariable("userId") String userId, @RequestParam("logo") MultipartFile logoImg,
 			@RequestParam("blogName") String blogName, Model model) {

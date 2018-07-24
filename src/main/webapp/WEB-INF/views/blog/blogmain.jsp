@@ -212,7 +212,7 @@
     <div class="col-sm-3"> 
       <c:choose>
       	<c:when test="${empty blogVo.logo }">
-      		<div><img src="${pageContext.request.contextPath }/img/default_logo.png"></div>
+      		<div><img width="250" src="${pageContext.request.contextPath }/img/default_logo.png"></div>
       	</c:when>
       	<c:otherwise>
       		<div><img src="${pageContext.request.contextPath }/logo/${blogVo.logo}"></div>
