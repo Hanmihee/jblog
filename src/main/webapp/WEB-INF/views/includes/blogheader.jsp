@@ -21,12 +21,12 @@
 }
 
 #jumbo {
-	color: white !important;
+	color: black !important;
 } 
 </style>
 </head>
 <body>
-	<div class="container">
+	<div >
 		<div class="jumbotron" id="jumbo">
 			<center>
 				<h2>${blogVo.title}</h2>
