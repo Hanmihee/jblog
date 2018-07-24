@@ -115,4 +115,12 @@ public class BlogService {
 	public PostVo getPostNewestFirst(String userId) {
 		return blogDao.getPostNewwstFirst(userId);
 	}
+
+	public PostVo getPostSelect(Map<String, Object> postMap) {
+		return blogDao.getPostSelect(postMap);
+	}
+
+	public List<CommentVo> getCommentsPostSelect(Long no) {
+		return blogDao.getCommentsPostSelect(no);
+	}
 }

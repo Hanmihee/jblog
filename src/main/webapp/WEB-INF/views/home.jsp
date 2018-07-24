@@ -35,7 +35,7 @@
 			<div class="row">
 				<div class="col-sm-4"></div>
 				<div class="col-sm-6">
-					<img src="${pageContext.request.contextPath }/img/jblog_logo.png">
+					<a href="/jblog"><img src="${pageContext.request.contextPath }/img/jblog_logo.png"></a>
 				</div>
 				<br>
 				<br>

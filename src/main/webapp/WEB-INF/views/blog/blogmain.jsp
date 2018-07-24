@@ -18,68 +18,7 @@
 <script language="javascript" type="text/javascript" 
   src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
   <script type="text/javascript">
-  	/*
-  	var postNo = ${postVo.no};
-  	
-  	function getPostList(categoryno){
-  		$.ajax({
-  			url : "${pageContext.request.contextPath}/blog/${userId}/postList",
-  			type : "post",
-  			data : "categoryno="+categoryno,
-  			dataType : "json",
-  			success : function(data){
-  				
-  				if(data.length > 0){
-  					var html ="";
-  					$("#postList").empty();
-  					for(i=0; i<data.length; i++){
-  						html += "<div class='col-sm-9'>";
-  						html += "<p onclick='getPost("+data[i].no+")'>"+data[i].title+"</p>";
-  						html += "</div>";
-  						html += "<div class='col-sm-3'> ";
-  						html += "<p>"+data[i].regDate+"</p>";
-  						html += "</div><br>";
-  					}
-  					$("#postList").html(html);
-  				}
-  			},
-  			error : function(request,status,error){
-  				console.log("실패");
-  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
-  			}
-  		});
-  	}
-  	
-  	function getPost(no){
-  		$.ajax({
-  			url : "${pageContext.request.contextPath}/blog/${userId}/post",
-  			type : "post",
-  			data : "no="+no,
-  			dataType : "json",
-  			success : function(data){
-				
-  				if(data.length > 0){
-  					getComment();
-  					postNo = data[0].no;
-  					
-  					var html = "";
-  					$("#post").empty();
-  					
-  					html += "<h3>"+data[0].title+"</h3>";
-  					html += "<p>"+data[0].content+"</p>";
-  					
-  					$("#post").html(html);
-  				}
-  			},
-  			error : function(request,status,error){
-  				console.log("실패");
-  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
-  			}
-  		});
-  	}
-  	*/
-  	
-  	function addComment(){
+  	function addComment(postNo){
   		var content = $("#content").val();
   		$.ajax({
   			url : "${pageContext.request.contextPath}/blog/${authUser.id}/addcomment",
@@ -114,7 +53,7 @@
   		});
   	}
   	
-  	function getComment(){
+  	/* function getComment(){
   		$.ajax({
   			url : "${pageContext.request.contextPath}/blog/${authUser.id}/getComment",
   			type : "post",
@@ -147,7 +86,7 @@
   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
   			}
   		});
-  	}
+  	} */
   </script>
 </head> 
 <body> 
@@ -177,7 +116,7 @@
     <!-- 댓글 -->
      
 	<c:if test="${!empty authUser }">
-			
+		<c:if test="${!empty postVo}">	
 	  <hr style="border:solid 0.3px black;">
       
          <label class="col-sm-2 control-label">${authUser.name}</label>
@@ -189,8 +128,11 @@
          </div> <br>
       
       <hr>
+      </c:if>
+	</c:if>
       
       <!-- comment 구현 -->
+      <c:if test="${!empty commentVo }">
       <div id="commentList">
       	<c:forEach var="comment" items="${commentVo}" varStatus="Loop">
       		<label class="col-sm-2 control-label">${comment.userName}</label>
@@ -202,15 +144,16 @@
          	</div> <br>
       	</c:forEach>
       </div>
-	</c:if>
-      
       <hr style="border:solid 0.5px black;">
+      </c:if>
+      
       
       <div>
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
          	<div class="col-sm-9"> 
-            	<p onclick="getPost(${post.no})">${post.title }</p>
+         	<!-- TODO : 게시글을 누르면, 그 게시글과 코멘트 불러오기 -->
+            	<a href="${pageContext.request.contextPath }/blog/post/${userId}/${post.categoryNo}/${post.no}">${post.title}</a>
          	</div> 
          	<div class="col-sm-3"> 
             	<p>${post.regDate}</p>
@@ -234,8 +177,6 @@
       <br>
       <div>
       	<ul>
-      	<!-- 카테고리 -->
-      	<!-- TODO: 컨트롤러로 넘기기 -->
       		<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
       			<li><a href="${pageContext.request.contextPath }/blog/category/${userId}/${category.no}">${ category.name }</a></li>
 			</c:forEach> 

@@ -19,6 +19,15 @@
 <title>HOME</title> 
 <script language="javascript" type="text/javascript" 
   src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
+<script type="text/javascript"> 
+function readURL(input) { 
+	if (input.files && input.files[0]) { 
+		var reader = new FileReader(); 
+		reader.onload = function (e) { $('#blah').attr('src', e.target.result); } 
+		reader.readAsDataURL(input.files[0]); 
+		} 
+	} 
+</script>
 </head> 
 <body> 
   <div id="container"> 
@@ -54,7 +63,8 @@
             <label for="blogName" class="col-sm-3 control-label">로고 이미지</label> 
             <div class="col-sm-6"> 
               <div name="child2" class="col-sm-6"> 
-              <input  type="file" name="logo"/>
+              <input  type="file" name="logo"  onchange="readURL(this);"/>
+              <img id="blah" src="#" alt="my image" />
               </div> 
               <BR> 
             </div> 

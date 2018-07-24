@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String flag = request.getParameter("flag");
+	pageContext.setAttribute("flag", flag);
+%>
 <html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -62,6 +66,7 @@
 										<div class='col-sm-5'>
 											<img class="profile-img"
 												src="http://www.buira.org/assets/images/shared/default-profile.png" />
+											
 										</div>
 									</center>
 								</div>
@@ -69,10 +74,12 @@
 								<br />
 								<!-- 로그인을 처리하는 Controller의 주소 입력  -->
 								<form class="form-signin" name="loginForm" action='${pageContext.request.contextPath }/user/login' method="POST" onsubmit="return doCheck()">
-									<input type="text" class="form-control" placeholder="ID"
-										name="id" > <input type="password"
-										class="form-control" placeholder="PASSWORD" name="password"
-										> <br />
+									<c:if test="${!empty flag }">
+										<center><font color="red">로그인 실패</font></center>
+										<center><font color="red">아이디 패스워드를 확인해주세요</font></center><br>
+									</c:if>
+									<input type="text" class="form-control" placeholder="ID"name="id" >
+									<input type="password" class="form-control" placeholder="PASSWORD" name="password"> <br />
 									<button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
 								</form>
 							</div>

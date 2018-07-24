@@ -32,4 +32,13 @@
       		WHERE post_no = #{no}
 		]]>
 	</select>
+	
+	<select id="selectGetCommentPostSelect" parameterType="long"
+		resultType="commentvo">
+		 <![CDATA[
+			SELECT no , user_name, post_no, content, reg_date
+     		FROM comment
+      		WHERE post_no = #{postNo}
+		]]>
+	</select>
 </mapper>

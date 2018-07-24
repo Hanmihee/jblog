@@ -60,7 +60,7 @@ public class BlogController {
 		boolean result = blogService.writePost(postMap);
 
 		if (result) {
-			return "redirect:/blog/"+userId+"/boardwriteform";
+			return "redirect:/blog/" + userId + "/boardwriteform";
 		} else {
 			return "blog/postfail";
 		}
@@ -109,25 +109,26 @@ public class BlogController {
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public String myBlog(@PathVariable("userId") String userId, Model model) {
-
+		List<CommentVo> commentVo;
+		// TODO : if문 정리하기
 		BlogVo blogVo = blogService.getBlogContent(userId);
 		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
 		// 모든 게시글을 가져옴.
 		List<PostVo> postListVo = blogService.getPostListFirst(userId);
 		// 맨위의 글을 가져옴. (최신글)
 		PostVo postVo = blogService.getPostNewestFirst(userId);
-		List<CommentVo> commentVo= blogService.getComments(postVo.getNo());
-		
-
+		if(postVo != null ){
+			commentVo = blogService.getComments(postVo.getNo());
+			model.addAttribute("commentVo", commentVo);
+		}
 		if (blogVo != null) {
 			// 이름이 존재함
 			model.addAttribute("blogVo", blogVo);
 			model.addAttribute("categoryVo", categoryVo);
 			model.addAttribute("postListVo", postListVo);
 			model.addAttribute("postVo", postVo);
-			model.addAttribute("userId",userId);
-			model.addAttribute("commentVo",commentVo);
-			
+			model.addAttribute("userId", userId);
+
 			return "blog/blogmain";
 		} else {
 			// 이름이 존재하지 않음.
@@ -142,85 +143,85 @@ public class BlogController {
 		Map<String, String> blogMap = new HashMap<String, String>();
 
 		if (logoImg.isEmpty() && blogName.isEmpty()) {
-			return "redirect:/blog/basicsetting";
+			return "redirect:/blog/"+userId+"/admin/basicsetting";
 		}
-		
+
 		// 이미지 파일 처리
 		if (!(logoImg.isEmpty())) {
 			saveFilename = blogService.updateSetting(logoImg);
 			blogMap.put("logo", saveFilename);
-		} 
+		}
 
 		// 블로그 이름 처리
 		if (!(blogName.isEmpty())) {
 			blogMap.put("title", blogName);
-		} 
+		}
 
 		blogMap.put("id", userId);
-		
 
 		boolean result = blogService.updateBlogNameAndLogo(blogMap);
 
 		if (result) {
-			return "redirect:/blog/basicsetting";
+			return "redirect:/blog/"+userId+"/admin/basicsetting";
 		} else {
 			return "blog/updateFail";
 		}
 	}
-	
-	@RequestMapping(value="/{userId}/postList",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/{userId}/postList", method = RequestMethod.POST)
 	@ResponseBody
-	public List<PostVo> getCategoryPostList(@PathVariable("userId") String userId, @RequestParam("categoryno") String categoryNo){
+	public List<PostVo> getCategoryPostList(@PathVariable("userId") String userId,
+			@RequestParam("categoryno") String categoryNo) {
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		postMap.put("userId", userId);
 		postMap.put("categoryNo", categoryNo);
-		
+
 		return blogService.getCategoryPostList(postMap);
 	}
-	
-	@RequestMapping(value="/{userId}/post",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/{userId}/post", method = RequestMethod.POST)
 	@ResponseBody
-	public List<PostVo> getPost(@PathVariable("userId") String userId, @RequestParam("no") String no){
+	public List<PostVo> getPost(@PathVariable("userId") String userId, @RequestParam("no") String no) {
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		postMap.put("userId", userId);
 		postMap.put("no", no);
-		
+
 		return blogService.getPost(postMap);
 	}
-	
-	@RequestMapping(value="{userId}/addcomment", method=RequestMethod.POST)
+
+	@RequestMapping(value = "{userId}/addcomment", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommentVo> getCommentList(@PathVariable("userId") String userId,@RequestParam("content") String content ,
-			@RequestParam("postno") String postNo){
+	public List<CommentVo> getCommentList(@PathVariable("userId") String userId,
+			@RequestParam("content") String content, @RequestParam("postno") String postNo) {
 		Map<String, Object> commentMap = new HashMap<String, Object>();
 		commentMap.put("userId", userId);
 		commentMap.put("postNo", postNo);
 		commentMap.put("content", content);
-		
+
 		return blogService.getCommentList(commentMap);
 	}
-	
-	@RequestMapping(value="{userId}/getComment", method=RequestMethod.POST)
+
+	@RequestMapping(value = "{userId}/getComment", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommentVo> getCommentList(@PathVariable("userId") String userId, @RequestParam("postno") Long postNo){
-		
+	public List<CommentVo> getCommentList(@PathVariable("userId") String userId, @RequestParam("postno") Long postNo) {
+
 		return blogService.getComments(postNo);
 	}
-	
-	@RequestMapping(value="/category/{userId}/{categoryNo}", method=RequestMethod.GET)
-	public String moveCategory(@PathVariable("userId") String userId,@PathVariable("categoryNo") Long no,Model model) {
-		
+
+	@RequestMapping(value = "/category/{userId}/{categoryNo}", method = RequestMethod.GET)
+	public String moveCategory(@PathVariable("userId") String userId, @PathVariable("categoryNo") Long no,
+			Model model) {
+
 		BlogVo blogVo = blogService.getBlogContent(userId);
 		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
-		
+
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		postMap.put("categoryNo", no);
 		postMap.put("userId", userId);
-		
+
 		List<PostVo> postListVo = blogService.getPostList(postMap); // 수정필요
 		PostVo postVo = blogService.getPostNewest(postMap); // 수정 필요
-		List<CommentVo> commentVo= blogService.getComments(postVo.getNo());
-		
+		List<CommentVo> commentVo = blogService.getComments(postVo.getNo());
 
 		if (blogVo != null) {
 			// 이름이 존재함
@@ -228,9 +229,41 @@ public class BlogController {
 			model.addAttribute("categoryVo", categoryVo);
 			model.addAttribute("postListVo", postListVo);
 			model.addAttribute("postVo", postVo);
-			model.addAttribute("userId",userId);
-			model.addAttribute("commentVo",commentVo);
-			
+			model.addAttribute("userId", userId);
+			model.addAttribute("commentVo", commentVo);
+
+			return "blog/blogmain";
+		} else {
+			// 이름이 존재하지 않음.
+			return "blog/blogNotFound";
+		}
+	}
+
+	@RequestMapping(value = "/post/{userId}/{categoryNo}/{postNo}", method = RequestMethod.GET)
+	public String movePost(@PathVariable("userId") String userId ,@PathVariable("categoryNo") Long cno ,
+			@PathVariable("postNo") Long pno, Model model) {
+		BlogVo blogVo = blogService.getBlogContent(userId);
+		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
+
+		Map<String, Object> postMap = new HashMap<String, Object>();
+		postMap.put("postNo", pno);
+		postMap.put("categoryNo", cno);
+		postMap.put("userId", userId);
+
+		List<PostVo> postListVo = blogService.getPostList(postMap);
+
+		PostVo postVo = blogService.getPostSelect(postMap);
+		List<CommentVo> commentVo = blogService.getCommentsPostSelect(postVo.getNo());
+
+		if (blogVo != null) {
+			// 이름이 존재함
+			model.addAttribute("blogVo", blogVo);
+			model.addAttribute("categoryVo", categoryVo);
+			model.addAttribute("postListVo", postListVo);
+			model.addAttribute("postVo", postVo);
+			model.addAttribute("userId", userId);
+			model.addAttribute("commentVo", commentVo);
+
 			return "blog/blogmain";
 		} else {
 			// 이름이 존재하지 않음.

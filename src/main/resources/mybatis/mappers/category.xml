@@ -26,11 +26,9 @@
 	<select id="selectCategory" parameterType="string"
 		resultType="categoryvo">
 		<![CDATA[
-			select c.no , c.name , c.description , c.name , count(*) as post_count 
-			from category c , post p
-			where c.user_no = (select no from users where id= #{userId} ) and
-									c.no = p.category_no
-			group by c.name;
+			SELECT c.no, c.name, (select count(*) from post p where user_no = u.no and p.category_no=c.no) as postCount, c.description 
+			FROM category c, users u
+			WHERE u.id = #{userId} AND u.no = c.user_no
 		]]>
 	</select>
 

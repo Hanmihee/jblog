@@ -34,6 +34,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String moveLoginForm() {
+		System.out.println("login !!!");
 		return "user/login";
 	}
 
@@ -49,7 +50,7 @@ public class UserController {
 			return "redirect:/";
 		} else {
 			System.out.println("로그인 실패");
-			return "redirect:/user/login";
+			return "redirect:/user/login?flag=1";
 		}
 	}
 	

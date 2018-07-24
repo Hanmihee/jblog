@@ -86,4 +86,12 @@ public class BlogDao {
 	public PostVo getPostNewwstFirst(String userId) {
 		return sqlSession.selectOne("post.selectPostOneFirst", userId);
 	}
+
+	public PostVo getPostSelect(Map<String, Object> postMap) {
+		return sqlSession.selectOne("post.selectPostSelect",postMap);
+	}
+
+	public List<CommentVo> getCommentsPostSelect(Long no) {
+		return sqlSession.selectList("comment.selectGetCommentPostSelect",no);
+	}
 }
