@@ -103,6 +103,10 @@ public class BlogService {
 	public List<CommentVo> getCommentList(Map<String, Object> commentMap) {
 		return blogDao.selectCommentList(commentMap);
 	}
+	
+	/*public CommentVo getComment(Map<String, Object> commentMap) {
+		return blogDao.selectComment(commentMap);
+	}*/
 
 	public List<CommentVo> getComments(Long no) {
 		return blogDao.getComments(no);
@@ -122,5 +126,9 @@ public class BlogService {
 
 	public List<CommentVo> getCommentsPostSelect(Long no) {
 		return blogDao.getCommentsPostSelect(no);
+	}
+
+	public boolean deleteComment(Map<String, Object> categoryMap) {
+		return blogDao.deleteComment(categoryMap);
 	}
 }

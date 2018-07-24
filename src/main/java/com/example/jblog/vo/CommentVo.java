@@ -3,9 +3,18 @@ package com.example.jblog.vo;
 public class CommentVo {
 	private Long no;
 	private String userName;
+	private String userId;
 	private Long postNo;
 	private String content;
 	private String regDate;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public Long getNo() {
 		return no;

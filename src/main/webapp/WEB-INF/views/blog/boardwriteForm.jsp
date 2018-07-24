@@ -34,7 +34,7 @@
          
         <div class="col-sm-10">
         <form:form action="${pageContext.request.contextPath}/blog/${authUser.id}/admin/boardwrite" class="form-horizontal" name="boardwriteForm" 
-        	method="post" modelAttribute="blogVo"> 
+        	method="post" modelAttribute="postVo"> 
  
           <div class="form-group"> 
             <label for="title" class="col-sm-3 control-label">제목</label> 
@@ -42,13 +42,14 @@
                 <input type="text" class="form-control" name="title" /> 
               </div> 
               <div class="col-sm-3"> 
-                <select name="categoryNo" class="selectpicker" >
+                <select class="form-control" name="categoryNo" class="selectpicker" >
     				<c:forEach var="category" items="${categoryVo}" varStatus="Loop">
 						<option value="${category.no}">${ category.name }</option>
 					</c:forEach> 
 				</select>
               </div> 
           </div> 
+          
  
           <div class="form-group"> 
             <label for="content" class="col-sm-3 control-label">내용</label> 

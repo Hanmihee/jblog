@@ -128,6 +128,7 @@ public class BlogController {
 			model.addAttribute("postListVo", postListVo);
 			model.addAttribute("postVo", postVo);
 			model.addAttribute("userId", userId);
+			
 
 			return "blog/blogmain";
 		} else {
@@ -191,7 +192,7 @@ public class BlogController {
 
 	@RequestMapping(value = "{userId}/addcomment", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommentVo> getCommentList(@PathVariable("userId") String userId,
+	public List<CommentVo> addAndGetCommentList(@PathVariable("userId") String userId,
 			@RequestParam("content") String content, @RequestParam("postno") String postNo) {
 		Map<String, Object> commentMap = new HashMap<String, Object>();
 		commentMap.put("userId", userId);
@@ -200,10 +201,23 @@ public class BlogController {
 
 		return blogService.getCommentList(commentMap);
 	}
+	
+	/*@RequestMapping(value = "{userId}/addcomment", method = RequestMethod.POST)
+	@ResponseBody
+	public CommentVo getComment(@PathVariable("userId") String userId,
+			@RequestParam("content") String content, @RequestParam("postno") String postNo) {
+		Map<String, Object> commentMap = new HashMap<String, Object>();
+		commentMap.put("userId", userId);
+		commentMap.put("postNo", postNo);
+		commentMap.put("content", content);
+
+		return blogService.getComment(commentMap);
+	}*/
+	
 
 	@RequestMapping(value = "{userId}/getComment", method = RequestMethod.POST)
 	@ResponseBody
-	public List<CommentVo> getCommentList(@PathVariable("userId") String userId, @RequestParam("postno") Long postNo) {
+	public List<CommentVo> getCommentList(@PathVariable("userId") String userId, @RequestParam("postNo") Long postNo) {
 
 		return blogService.getComments(postNo);
 	}
@@ -274,4 +288,27 @@ public class BlogController {
 			return "blog/blogNotFound";
 		}
 	}
+	
+	@RequestMapping(value = "/{userId}/deletecomment", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteComment(@PathVariable("userId") String userId, @RequestParam("no") Long no,
+			@RequestParam("postNo") Long postNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Map<String, Object> categoryMap = new HashMap<String, Object>();
+		categoryMap.put("no", no);
+		categoryMap.put("id", userId);
+		categoryMap.put("postNo", postNo);
+
+		boolean result = blogService.deleteComment(categoryMap);
+
+		if(result) {
+			map.put("result", "success");
+			map.put("data", result);
+		}
+		
+		return map;
+	}
 }
+
+

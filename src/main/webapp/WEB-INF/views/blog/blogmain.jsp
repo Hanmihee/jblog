@@ -18,68 +18,99 @@
 <script language="javascript" type="text/javascript" 
   src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
   <script type="text/javascript">
-  	function addComment(postNo){
+  function addComment(postNo){
+		var content = $("#content").val();
+		var userId = "${authUser.id}";
+		var a;
+		$.ajax({
+			url : "${pageContext.request.contextPath}/blog/${authUser.id}/addcomment",
+			type : "post",
+			data : "content="+content+"&postno="+postNo,
+			dataType : "json",
+			success : function(data){
+				
+				if(data.length > 0){
+					var html = "";
+					$("#commentList").empty();
+					
+					for(i=0; i<data.length; i++){
+						html += "<label for='title' class='col-sm-2 control-label'>"+data[i].userName+"</label>";
+						html += "<div class='col-sm-6'> ";
+						html += "<p>"+data[i].content+"</p>";
+						html += "</div> ";
+						html += "<div class='col-sm-3'> ";
+						html += "<p>"+data[i].regDate+"</p>";
+						html += "</div>";
+						html += "</div>";
+						
+						console.log(userId == data[i].userId);
+						
+						if(userId == data[i].userId){
+								html += "<div class='col-sm-1'> ";
+								html += "<button onclick='deleteComment("+data[i].no+","+data[i].postNo+")'>X</button>";
+								html += "</div> ";
+						}
+					}
+					
+					
+					$("#commentList").html(html);
+					$("#content").val("");
+				}
+			},
+			error : function(request,status,error){
+				console.log("실패");
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
+			}
+		});
+	}
+  
+  function deleteComment(no,postNo){
+	  $.ajax({
+			url : "${pageContext.request.contextPath}/blog/${authUser.id}/deletecomment",
+			type : "post",
+			data : { no : no, postNo : postNo },
+			dataType : "json",
+			success : function(result){
+				if(result.data){
+				 	getComment(postNo);
+				}
+			},
+			error : function(request,status,error){
+				console.log("실패");
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
+			}
+		});
+  }
+  
+/*   	function addComment(postNo){
   		var content = $("#content").val();
+  		var userName = "${authUser.name}";
+  		var a;
   		$.ajax({
   			url : "${pageContext.request.contextPath}/blog/${authUser.id}/addcomment",
   			type : "post",
   			data : "content="+content+"&postno="+postNo,
   			dataType : "json",
   			success : function(data){
-				
-  				if(data.length > 0){
+				console.log("성공했나?");
+  				
   					var html = "";
-  					$("#commentList").empty();
-  					
-  					for(i=0; i<data.length; i++){
-  						html += "<label for='title' class='col-sm-2 control-label'>"+data[i].userName+"</label>";
-  						html += "<div class='col-sm-7'> ";
-  						html += "<p>"+data[i].content+"</p>";
+  					console.log("data 받아왔나?");
+  						html += "<label for='title' class='col-sm-2 control-label'>"+userName+"</label>";
+  						html += "<div class='col-sm-6'> ";
+  						html += "<p>"+content+"</p>";
   						html += "</div> ";
   						html += "<div class='col-sm-3'> ";
-  						html += "<p>"+data[i].regDate+"</p>";
+  						html += "<p>"+data.regDate+"</p>";
   						html += "</div> <br>";
   						html += "</div>";
-  					}
+  						html += "<div class='col-sm-1'> ";
+						html += "<button>X</button>";
+						html += "</div> ";
+  					
   					
   					$("#commentList").html(html);
   					$("#content").val("");
-  				}
-  			},
-  			error : function(request,status,error){
-  				console.log("실패");
-  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
-  			}
-  		});
-  	}
-  	
-  	/* function getComment(){
-  		$.ajax({
-  			url : "${pageContext.request.contextPath}/blog/${authUser.id}/getComment",
-  			type : "post",
-  			data : "postno="+postNo,
-  			dataType : "json",
-  			success : function(data){
-				
-  				if(data.length > 0){
-  					console.log("성공?");
-  					var html = "";
-  					$("#commentList").empty();
-  					
-  					for(i=0; i<data.length; i++){
-  						html += "<label for='title' class='col-sm-2 control-label'>"+data[i].userName+"</label>";
-  						html += "<div class='col-sm-7'> ";
-  						html += "<p>"+data[i].content+"</p>";
-  						html += "</div> ";
-  						html += "<div class='col-sm-3'> ";
-  						html += "<p>"+data[i].regDate+"</p>";
-  						html += "</div> <br>";
-  						html += "</div>";
-  					}
-  					
-  					$("#commentList").html(html);
-  					$("#content").val("");
-  				}
   			},
   			error : function(request,status,error){
   				console.log("실패");
@@ -87,6 +118,51 @@
   			}
   		});
   	} */
+
+  	function getComment(postNo){
+  		var userId = "${authUser.id}";
+  		$.ajax({
+  			url : "${pageContext.request.contextPath}/blog/${authUser.id}/getComment",
+  			type : "post",
+  			data : { postNo : postNo },
+  			dataType : "json",
+  			success : function(data){
+
+				if(data.length > 0){
+					var html = "";
+					$("#commentList").empty();
+					
+					for(i=0; i<data.length; i++){
+						html += "<label for='title' class='col-sm-2 control-label'>"+data[i].userName+"</label>";
+						html += "<div class='col-sm-6'> ";
+						html += "<p>"+data[i].content+"</p>";
+						html += "</div> ";
+						html += "<div class='col-sm-3'> ";
+						html += "<p>"+data[i].regDate+"</p>";
+						html += "</div>";
+						html += "</div>";
+						
+						console.log(userId == data[i].userId);
+						
+						if(userId == data[i].userId){
+							console.log(data[i].postNo);
+							console.log(data[i].no);
+							
+								html += "<div class='col-sm-1'> ";
+								html += "<button onclick='deleteComment("+data[i].no+","+data[i].postNo+")'>X</button>";
+								html += "</div> ";
+						}
+					}
+					$("#commentList").html(html);
+					$("#content").val("");
+				}
+  			},
+  			error : function(request,status,error){
+  				console.log("실패");
+  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
+  			}
+  		});
+  	}  
   </script>
 </head> 
 <body> 
@@ -132,37 +208,44 @@
 	</c:if>
       
       <!-- comment 구현 -->
-      <c:if test="${!empty commentVo }">
       <div id="commentList">
       	<c:forEach var="comment" items="${commentVo}" varStatus="Loop">
-      		<label class="col-sm-2 control-label">${comment.userName}</label>
-         	<div class="col-sm-7"> 
+      		<label class="col-sm-2 control-label" >${comment.userName}</label>
+         	<div class="col-sm-6"> 
             	<p>${comment.content}</p>
          	</div> 
          	<div class="col-sm-3"> 
             	<p>${comment.regDate }</p>
-         	</div> <br>
+         	</div>
+         	<!-- TODO -->
+         	<!-- 세션의 userId 와 코멘트의 userId가 같을때 삭제 가능 -->
+         	<c:if test="${!empty authUser }">
+         		<c:if test="${ authUser.id eq comment.userId }"> 
+         		<div class="col-sm-1"> 
+            		<button onclick="deleteComment(${comment.no},${comment.postNo })">X</button>
+         		</div> 
+         		</c:if>
+         	</c:if>
+         	<br>
       	</c:forEach>
-      </div>
-      <hr style="border:solid 0.5px black;">
-      </c:if>
+      </div><br>
       
       
       <div>
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
          	<div class="col-sm-9"> 
-         	<!-- TODO : 게시글을 누르면, 그 게시글과 코멘트 불러오기 -->
+	        <hr style="border:solid 0.5px black;">
             	<a href="${pageContext.request.contextPath }/blog/post/${userId}/${post.categoryNo}/${post.no}">${post.title}</a>
          	</div> 
          	<div class="col-sm-3"> 
+         		<hr style="border:solid 0.5px white;">
             	<p>${post.regDate}</p>
          	</div><br>
         </c:forEach>
         </div>
 	  </div>
       <hr> 
-    
     </div> 
  
     <div class="col-sm-3"> 

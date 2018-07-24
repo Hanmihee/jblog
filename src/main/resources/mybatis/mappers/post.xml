@@ -26,6 +26,7 @@
       			from users
       			where id = #{userId}
       		) AND category_no = #{categoryNo}
+      		ORDER BY no desc
     	  ]]>
 	</select>
 	<!-- 가장 최신글을 가지고옴 -->
@@ -53,6 +54,7 @@
       			from users
       			where id = #{userId}
       		) AND category_no = #{categoryNo}
+      		ORDER BY no desc
     	  ]]>
 	</select>
 	<!-- 특정 번호의 post를 가지고옴 -->
