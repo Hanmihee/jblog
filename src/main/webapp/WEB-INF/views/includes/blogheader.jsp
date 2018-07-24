@@ -21,9 +21,8 @@
 }
 
 #jumbo {
-	background-color: #A4A4A4;
 	color: white !important;
-}
+} 
 </style>
 </head>
 <body>

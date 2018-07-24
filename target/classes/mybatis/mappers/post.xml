@@ -95,6 +95,7 @@
       			from users
       			where id = #{userId}
       		) 
+      		ORDER BY reg_date DESC
     	  ]]>
 	</select>
 	<select id="selectPostSelect" parameterType="map"

@@ -27,34 +27,6 @@
 		]]>
 	</select>
 	
-	<!-- <select id="selectComment" resultType="commentvo">
-		<![CDATA[
-			SELECT no , user_name, post_no, content, reg_date, user_id
-     		FROM comment
-      		WHERE post_no = #{postNo} AND user_id = #{userId}
-      		ORDER BY no desc
-      		LIMIT 1;
-		]]>
-	</select> -->
-	
-	<select id="selectComments" resultType="commentvo">
-		<![CDATA[
-			SELECT no , user_name, post_no, content, reg_date, user_id
-     		FROM comment
-      		WHERE post_no = #{no}
-      		ORDER BY no desc
-		]]>
-	</select>
-	
-	<select id="selectGetCommentPostSelect" parameterType="long"
-		resultType="commentvo">
-		 <![CDATA[
-			SELECT no , user_name, post_no, content, reg_date, user_id
-     		FROM comment
-      		WHERE post_no = #{postNo}
-      		ORDER BY no desc
-		]]>
-	</select>
 	<delete id="deleteComment" parameterType="map">
 		<![CDATA[
 			DELETE FROM comment

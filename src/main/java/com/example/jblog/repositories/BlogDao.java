@@ -75,14 +75,9 @@ public class BlogDao {
 		return sqlSession.selectList("comment.selectCommentList",commentMap);
 	}
 	
-	/*public CommentVo selectComment(Map<String, Object> commentMap) {
-		int count = sqlSession.insert("comment.insertComment",commentMap);
-		
-		return sqlSession.select("comment.selectComment",commentMap);
-	}
-*/
-	public List<CommentVo> getComments(Long no) {
-		return sqlSession.selectList("comment.selectComments",no);
+
+	public List<CommentVo> getComments(Long postNo) {
+		return sqlSession.selectList("comment.selectCommentList",postNo);
 	}
 
 	public List<PostVo> getPostListFirst(String userId) {
@@ -97,8 +92,8 @@ public class BlogDao {
 		return sqlSession.selectOne("post.selectPostSelect",postMap);
 	}
 
-	public List<CommentVo> getCommentsPostSelect(Long no) {
-		return sqlSession.selectList("comment.selectGetCommentPostSelect",no);
+	public List<CommentVo> getCommentsPostSelect(Long postNo) {
+		return sqlSession.selectList("comment.selectCommentList",postNo);
 	}
 
 	public boolean deleteComment(Map<String, Object> categoryMap) {

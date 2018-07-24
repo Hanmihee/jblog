@@ -197,7 +197,7 @@
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
          	<div class="col-sm-9"> 
-            	<a href="${pageContext.request.contextPath }/blog/post/${userId}/${post.categoryNo}/${post.no}">${post.title}</a>
+            	<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${post.no}">${post.title}</a>
          	</div> 
          	<div class="col-sm-3"> 
             	<p>${post.regDate}</p>

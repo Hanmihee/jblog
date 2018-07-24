@@ -138,7 +138,7 @@ public class BlogController {
 			model.addAttribute("userId", userId);
 			
 
-			return "blog/blogmain";
+			return "blog/blogmaindefault";
 		} else {
 			// 이름이 존재하지 않음.
 			return "blog/blogNotFound";
@@ -210,18 +210,6 @@ public class BlogController {
 
 		return blogService.getCommentList(commentMap);
 	}
-	
-	/*@RequestMapping(value = "{userId}/addcomment", method = RequestMethod.POST)
-	@ResponseBody
-	public CommentVo getComment(@PathVariable("userId") String userId,
-			@RequestParam("content") String content, @RequestParam("postno") String postNo) {
-		Map<String, Object> commentMap = new HashMap<String, Object>();
-		commentMap.put("userId", userId);
-		commentMap.put("postNo", postNo);
-		commentMap.put("content", content);
-
-		return blogService.getComment(commentMap);
-	}*/
 	
 
 	@RequestMapping(value = "{userId}/getComment", method = RequestMethod.POST)
@@ -318,6 +306,45 @@ public class BlogController {
 		
 		return map;
 	}
+	
+	@RequestMapping(value = "/post/default/{userId}/{postNo}", method = RequestMethod.GET)
+	public String moveBlogMainDefault(@PathVariable("userId") String userId, @PathVariable("postNo") Long postNo,Model model) {
+		//TODO
+		// post 는 post 가져오는 메소드로 쓰고.
+		// 나머지는 메인페이지 가져오는것
+		
+		
+		Map<String, Object> postMap = new HashMap<String, Object>();
+		postMap.put("postNo", postNo);
+		postMap.put("userId", userId);
+		
+		
+		List<CommentVo> commentVo;
+		BlogVo blogVo = blogService.getBlogContent(userId);
+		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
+		// 모든 게시글을 가져옴.
+		List<PostVo> postListVo = blogService.getPostListFirst(userId);
+		
+		PostVo postVo = blogService.getPostSelect(postMap);
+		if(postVo != null ){
+			commentVo = blogService.getComments(postVo.getNo());
+			model.addAttribute("commentVo", commentVo);
+		}
+		if (blogVo != null) {
+			// 이름이 존재함
+			model.addAttribute("blogVo", blogVo);
+			model.addAttribute("categoryVo", categoryVo);
+			model.addAttribute("postListVo", postListVo);
+			model.addAttribute("postVo", postVo);
+			model.addAttribute("userId", userId);
+
+			return "blog/blogmaindefault";
+		} else {
+			// 이름이 존재하지 않음.
+			return "blog/blogNotFound";
+		}
+	}
 }
+
 
 

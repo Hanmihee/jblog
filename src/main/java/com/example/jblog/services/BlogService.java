@@ -108,8 +108,8 @@ public class BlogService {
 		return blogDao.selectComment(commentMap);
 	}*/
 
-	public List<CommentVo> getComments(Long no) {
-		return blogDao.getComments(no);
+	public List<CommentVo> getComments(Long postNo) {
+		return blogDao.getComments(postNo);
 	}
 
 	public List<PostVo> getPostListFirst(String userId){
