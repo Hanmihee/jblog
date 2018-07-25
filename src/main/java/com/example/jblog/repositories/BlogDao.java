@@ -55,12 +55,6 @@ public class BlogDao {
 		return count == 1;
 	}
 
-	// TODO: 지우기
-	/*
-	 * public List<PostVo> selectPostList(Map<String, Object> postMap) { return
-	 * sqlSession.selectList("post.selectPostList",postMap); }
-	 */
-
 	public PostVo selectOnePost(Map<String, Object> postMap) {
 		return sqlSession.selectOne("post.selectPostOne", postMap);
 	}
@@ -88,16 +82,12 @@ public class BlogDao {
 		// 한페이지 데이터 가져오기
 		Map<String, Object> postListMap = new HashMap<String, Object>();
 		int currPage = (Integer) postMap.get("currPage");
-		System.out.println("currPage : " + currPage);
 		int postPerPage = (Integer) postMap.get("postPerPage");
-		System.out.println("postPerPage : " + postPerPage);
 		int startPos = (currPage - 1) * postPerPage;
 
 		postListMap.put("startPos", startPos);
-		System.out.println("startPos : " + startPos);
 		postListMap.put("postPerPage", postMap.get("postPerPage"));
 		postListMap.put("userId", postMap.get("userId"));
-		System.out.println("userId : " + postMap.get("userId"));
 		return sqlSession.selectList("post.selectPostListFirst", postListMap);
 	}
 
@@ -125,17 +115,13 @@ public class BlogDao {
 
 		PagingVo vo = sqlSession.selectOne("post.selectMaxPageCount", map);
 		int div = vo.getPdiv();
-		System.out.println("div : " + div);
 		int mod = vo.getPmod();
-		System.out.println("mod : " + mod);
 
 		int maxPage = div;
 
 		if (mod > 0) {
 			maxPage += 1;
 		}
-
-		System.out.println("maxPage : " + maxPage);
 
 		return maxPage;
 	}
@@ -170,8 +156,6 @@ public class BlogDao {
 			maxPage += 1;
 		}
 
-		System.out.println("maxPage : " + maxPage);
-
 		return maxPage;
 	}
 
@@ -204,8 +188,6 @@ public class BlogDao {
 		if (mod > 0) {
 			maxPage += 1;
 		}
-
-		System.out.println("maxPage : " + maxPage);
 
 		return maxPage;
 	}

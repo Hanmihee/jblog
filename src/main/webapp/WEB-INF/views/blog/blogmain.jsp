@@ -43,7 +43,6 @@
 						html += "</div>";
 						html += "</div>";
 						
-						console.log(userId == data[i].userId);
 						
 						if(userId == data[i].userId){
 								html += "<div class='col-sm-1'> ";
@@ -104,11 +103,8 @@
 						html += "</div>";
 						html += "</div>";
 						
-						console.log(userId == data[i].userId);
 						
 						if(userId == data[i].userId){
-							console.log(data[i].postNo);
-							console.log(data[i].no);
 							
 								html += "<div class='col-sm-1'> ";
 								html += "<button onclick='deleteComment("+data[i].no+","+data[i].postNo+")'>X</button>";
@@ -178,12 +174,11 @@
          	<div class="col-sm-3"> 
             	<p>${comment.regDate }</p>
          	</div>
-         	<!-- TODO -->
          	<!-- 세션의 userId 와 코멘트의 userId가 같을때 삭제 가능 -->
          	<c:if test="${!empty authUser }">
          		<c:if test="${ authUser.id eq comment.userId }"> 
          		<div class="col-sm-1"> 
-            		<button onclick="deleteComment(${comment.no},${comment.postNo })">X</button>
+            		<button onclick="deleteComment(${comment.no},${comment.postNo})">X</button>
          		</div> 
          		</c:if>
          	</c:if>
@@ -197,7 +192,6 @@
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
          	<div class="col-sm-9"> 
-            	<%-- <a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${post.no}/${currPage}">${post.title}</a> --%>
             	<a href="${pageContext.request.contextPath }/blog/post/${userId}/${post.categoryNo}/${post.no}/${currPage}">${post.title}</a>
          	</div> 
          	<div class="col-sm-3"> 
@@ -209,8 +203,7 @@
       <!-- paging처리 -->  
         <c:choose>
 			<c:when test="${currPage > 1 }">
-			<%-- <a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${currPage - 1 }"> ◀ </a> --%>
-			<a href="${pageContext.request.contextPath }/blog/post/${userId}/${postVo.no}/${currPage - 1 }"> ◀ </a>
+			<a href="${pageContext.request.contextPath }/blog/post/${userId}/${postVo.categoryNo }/${postVo.no}/${currPage - 1 }"> ◀ </a>
 			</c:when>
 			<c:otherwise>
 			<font>이전 페이지 없음</font>
@@ -229,7 +222,6 @@
 						<b>${pageIdx }</b>
 					</c:when>
 					<c:otherwise>
-						<%-- <a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${pageIdx}">${pageIdx }</a> --%>
 						<a href="${pageContext.request.contextPath }/blog/post/${userId}/${postVo.categoryNo }/${postVo.no}/${pageIdx}">${pageIdx }</a>
 					</c:otherwise>
 				</c:choose>
@@ -241,7 +233,6 @@
 		<c:if test="${ !empty postVo }">
 		<c:choose>
 			<c:when test="${currPage < maxPage }"> <!-- 현재 페이지수 < 최대 페이지수 -->
-				<%-- <a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${currPage + 1 }"> ▶ </a> --%> 
 				<a href="${pageContext.request.contextPath }/blog/post/${userId}/${postVo.categoryNo }/${postVo.no}/${currPage + 1 }"> ▶ </a> 
 			</c:when>
 			<c:otherwise>

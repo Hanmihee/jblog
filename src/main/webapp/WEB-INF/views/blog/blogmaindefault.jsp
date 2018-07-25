@@ -43,7 +43,6 @@
 						html += "</div>";
 						html += "</div>";
 						
-						console.log(userId == data[i].userId);
 						
 						if(userId == data[i].userId){
 								html += "<div class='col-sm-1'> ";
@@ -104,11 +103,8 @@
 						html += "</div>";
 						html += "</div>";
 						
-						console.log(userId == data[i].userId);
 						
 						if(userId == data[i].userId){
-							console.log(data[i].postNo);
-							console.log(data[i].no);
 							
 								html += "<div class='col-sm-1'> ";
 								html += "<button onclick='deleteComment("+data[i].no+","+data[i].postNo+")'>X</button>";

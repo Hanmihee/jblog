@@ -37,7 +37,6 @@ public class BlogService {
 		String saveFilename = "";
 
 		try {
-			System.out.println("들어옴?1");
 			String originalFilename = logoImg.getOriginalFilename(); // 원본 파일명
 			String extName = originalFilename.substring(originalFilename.lastIndexOf("."), originalFilename.length());
 			Long size = logoImg.getSize();
@@ -48,7 +47,6 @@ public class BlogService {
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-//		System.out.println("들어옴?2 : "+saveFilename);
 		return saveFilename;
 	}
 
@@ -83,11 +81,6 @@ public class BlogService {
 	public boolean writePost(Map<String, Object> postMap) {
 		return blogDao.insertPost(postMap);
 	}
-
-	// TODO : 지우기
-/*	public List<PostVo> getPostList(Map<String, Object> postMap) {
-		return blogDao.selectPostList(postMap);
-	}*/
 
 	public PostVo getPostNewest(Map<String, Object> postMap) {
 		return blogDao.selectOnePost(postMap);
@@ -133,7 +126,6 @@ public class BlogService {
 		return blogDao.getMaxPageCount(postPerPage,userId);
 	}
 	
-	// TODO : selectPostList 지우기
 	public List<PostVo> getPostListCategory(Map<String, Object> postMap) {
 		return blogDao.getPostListCategory(postMap);
 	}

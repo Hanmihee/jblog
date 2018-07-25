@@ -16,20 +16,6 @@
 		)
 		]]>
 	</insert>
-	<!-- TODO : 지우기 -->
-	<!-- <select id="selectPostList" parameterType="map"
-		resultType="postvo">
-		  <![CDATA[ 
-      		SELECT no , category_no, user_no, title , content, reg_date
-     		FROM post
-      		WHERE  user_no = (
-      			select no
-      			from users
-      			where id = #{userId}
-      		) AND category_no = #{categoryNo}
-      		ORDER BY no desc
-    	  ]]>
-	</select> -->
 	
 	<!-- 가장 최신글을 가지고옴 -->
 	<select id="selectPostOne" parameterType="map"

@@ -24,8 +24,6 @@
 		if (isNull(obj.name)) {
 			alert('이름을 입력해주세요');
 			obj.name.focus();
-			console.log(checkIdBool);
-			console.log(checkIdStr); 
 			return false;
 		} else if (isNull(obj.id)) {
 			alert('아이디를 입력해주세요');

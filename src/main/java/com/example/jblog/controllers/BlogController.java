@@ -55,11 +55,8 @@ public class BlogController {
 	public String boardWriteAction(@PathVariable("userId") String userId, @ModelAttribute PostVo vo) {
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		postMap.put("title", vo.getTitle());
-		System.out.println("title : " + vo.getTitle());
 		postMap.put("content", vo.getContent());
-		System.out.println("content : " + vo.getContent());
 		postMap.put("categoryNo", vo.getCategoryNo());
-		System.out.println("categoryNo : " + vo.getCategoryNo());
 		postMap.put("id", userId);
 
 		boolean result = blogService.writePost(postMap);
@@ -291,38 +288,6 @@ public class BlogController {
 			return "blog/blogNotFound";
 		}
 	}
-
-	/*@RequestMapping(value = "/post/{userId}/{categoryNo}/{postNo}", method = RequestMethod.GET)
-	public String movePost(@PathVariable("userId") String userId ,@PathVariable("categoryNo") Long cno ,
-			@PathVariable("postNo") Long pno, Model model) {
-		BlogVo blogVo = blogService.getBlogContent(userId);
-		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
-
-		Map<String, Object> postMap = new HashMap<String, Object>();
-		postMap.put("postNo", pno);
-		postMap.put("categoryNo", cno);
-		postMap.put("userId", userId);
-
-		List<PostVo> postListVo = blogService.getPostList(postMap);
-
-		PostVo postVo = blogService.getPostSelect(postMap);
-		List<CommentVo> commentVo = blogService.getCommentsPostSelect(postVo.getNo());
-
-		if (blogVo != null) {
-			// 이름이 존재함
-			model.addAttribute("blogVo", blogVo);
-			model.addAttribute("categoryVo", categoryVo);
-			model.addAttribute("postListVo", postListVo);
-			model.addAttribute("postVo", postVo);
-			model.addAttribute("userId", userId);
-			model.addAttribute("commentVo", commentVo);
-
-			return "blog/blogmain";
-		} else {
-			// 이름이 존재하지 않음.
-			return "blog/blogNotFound";
-		}
-	}*/
 	
 	@RequestMapping(value = "/post/{userId}/{categoryNo}/{postNo}/{currPage}", method = RequestMethod.GET)
 	public String movePost(@PathVariable("userId") String userId ,@PathVariable("categoryNo") Long cno ,

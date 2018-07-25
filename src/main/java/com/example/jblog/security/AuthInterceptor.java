@@ -46,20 +46,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 			authUser = (UserVo)session.getAttribute("authUser");
 		}
 		
-		// TODO  판별을 어떻게 할것인가???
 		// url의 user ID와 세션의 user ID 비교 
 		if(authUser == null) {
 			/* 로그인이 되어있지 않으면 */
 			response.sendRedirect(request.getContextPath()+"/user/login");
-			
-			/*System.out.println("패스 : "+request.getContextPath());
-			System.out.println("uri : "+request.getRequestURI());
-			System.out.println("url : "+request.getRequestURL());*/
-			
-			// contextPath : /jblog
-			// uri : /jblog/blog/algml812/admin/basicsetting
-			// url : http://localhost:8080/jblog/blog/algml812/admin/basicsetting
-			
 			
 			return false;
 		} else {

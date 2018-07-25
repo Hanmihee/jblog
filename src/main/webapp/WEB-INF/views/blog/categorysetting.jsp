@@ -28,7 +28,6 @@
 			dataType : "json",
 			success : function(result){
 				if(result.data){
-					console.log("데이터 삽입 성공");
 					getCategoryList();
 					$("#categoryName").val("");
 					$("#categoryDescription").val("");
