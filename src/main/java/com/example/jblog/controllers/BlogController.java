@@ -137,9 +137,6 @@ public class BlogController {
 		
 		// 페이지에 맞는 게시글을 가져옴.
 		List<PostVo> postListVo = blogService.getPostListFirst(postMap);
-		System.out.println("PostListVo0 : "+postListVo.get(0).getContent());
-		System.out.println("PostListVo1 : "+postListVo.get(1).getContent());
-		System.out.println("PostListVo2 : "+postListVo.get(2).getContent());
 		
 		navStartPage = (page - 1) / 5 * 5 + 1;
 		
@@ -295,7 +292,7 @@ public class BlogController {
 		}
 	}
 
-	@RequestMapping(value = "/post/{userId}/{categoryNo}/{postNo}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/post/{userId}/{categoryNo}/{postNo}", method = RequestMethod.GET)
 	public String movePost(@PathVariable("userId") String userId ,@PathVariable("categoryNo") Long cno ,
 			@PathVariable("postNo") Long pno, Model model) {
 		BlogVo blogVo = blogService.getBlogContent(userId);
@@ -319,6 +316,55 @@ public class BlogController {
 			model.addAttribute("postVo", postVo);
 			model.addAttribute("userId", userId);
 			model.addAttribute("commentVo", commentVo);
+
+			return "blog/blogmain";
+		} else {
+			// 이름이 존재하지 않음.
+			return "blog/blogNotFound";
+		}
+	}*/
+	
+	@RequestMapping(value = "/post/{userId}/{categoryNo}/{postNo}/{currPage}", method = RequestMethod.GET)
+	public String movePost(@PathVariable("userId") String userId ,@PathVariable("categoryNo") Long cno ,
+			@PathVariable("postNo") Long pno,@PathVariable("currPage") int currPage, Model model) {
+		
+		int maxPage = 1;
+		int navStartPage = 1;
+		int page = currPage;
+		
+		BlogVo blogVo = blogService.getBlogContent(userId);
+		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
+
+		Map<String, Object> postMap = new HashMap<String, Object>();
+		postMap.put("postNo", pno);
+		postMap.put("categoryNo", cno);
+		postMap.put("userId", userId);
+		postMap.put("postPerPage", 3);
+		postMap.put("currPage", page);
+
+		List<PostVo> postListVo = blogService.getPostListByPost(postMap); // userId , categortNo , postNo
+		maxPage = blogService.getMaxPageCountByPost(3, userId, cno); // postPerPage , userId , categoryNo 
+
+		PostVo postVo = blogService.getPostSelect(postMap);
+		
+		List<CommentVo> commentVo = blogService.getCommentsPostSelect(postVo.getNo());
+		
+		navStartPage = (page - 1) / 5 * 5 + 1;
+
+		if (blogVo != null) {
+			// 이름이 존재함
+			model.addAttribute("blogVo", blogVo);
+			model.addAttribute("categoryVo", categoryVo);
+			model.addAttribute("postVo", postVo);
+			model.addAttribute("userId", userId);
+			model.addAttribute("commentVo", commentVo);
+			model.addAttribute("postListVo",postListVo);
+			
+			model.addAttribute("currPage", page);
+			model.addAttribute("postPerPage", 3);
+			model.addAttribute("maxPage", maxPage);
+			model.addAttribute("navStartPage", navStartPage);
+			model.addAttribute("navPageCount", 5); // 네비게이션 갯수
 
 			return "blog/blogmain";
 		} else {

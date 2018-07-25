@@ -84,9 +84,10 @@ public class BlogService {
 		return blogDao.insertPost(postMap);
 	}
 
-	public List<PostVo> getPostList(Map<String, Object> postMap) {
+	// TODO : 지우기
+/*	public List<PostVo> getPostList(Map<String, Object> postMap) {
 		return blogDao.selectPostList(postMap);
-	}
+	}*/
 
 	public PostVo getPostNewest(Map<String, Object> postMap) {
 		return blogDao.selectOnePost(postMap);
@@ -139,5 +140,13 @@ public class BlogService {
 
 	public int getMaxPageCountCategory(int postPerPage, String userId, Long categoryNo) {
 		return blogDao.getMaxPageCountCategory(postPerPage , userId , categoryNo);
+	}
+
+	public List<PostVo> getPostListByPost(Map<String, Object> postMap) {
+		return blogDao.getPostListByPost(postMap);
+	}
+
+	public int getMaxPageCountByPost(int postPerPage, String userId, Long categoryNo) {
+		return blogDao.getMaxPageCountByPost(postPerPage,userId,categoryNo);
 	}
 }
