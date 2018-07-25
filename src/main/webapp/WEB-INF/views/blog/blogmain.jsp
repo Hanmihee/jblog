@@ -82,6 +82,13 @@
   }
   	function getComment(postNo){
   		var userId = "${authUser.id}";
+  		
+  		var obj = document.commentSetting;
+  		if (isNull(obj.content)) {
+			alert('코멘트 내용을 입력해주세요');
+			return false;
+		}
+  		
   		$.ajax({
   			url : "${pageContext.request.contextPath}/blog/${authUser.id}/getComment",
   			type : "post",
@@ -120,7 +127,35 @@
   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 				
   			}
   		});
-  	}  
+  	} 
+  	
+  /* 	function checkInput() {
+		var obj = document.commentSetting;
+
+		if (isNull(obj.content)) {
+			alert('코멘트 내용을 입력해주세요');
+			return false;
+		} else{
+			// addComment(${postVo.no});
+		} 
+	}
+
+	function isNull(obj) {
+		if (obj.value == "") {
+			obj.focus();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	window.onload = function () {
+	  $("#content").keydown(function(key) {
+          if (key.keyCode == 13) {
+        	  checkInput();
+          }
+      });
+	}; */
   </script>
 </head> 
 <body> 
@@ -148,7 +183,6 @@
 	 
 	  
     <!-- 댓글 -->
-     
 	<c:if test="${!empty authUser }">
 		<c:if test="${!empty postVo}">	
        <hr style="border:solid 0.3px black;">
@@ -159,7 +193,6 @@
          <div class="col-sm-2"> 
             <input type="button" onclick="addComment(${postVo.no})"class="form-control" name="save" value="저장"/>     
          </div> <br>
-      
       <hr>
       </c:if>
 	</c:if>
@@ -200,7 +233,6 @@
          	</div><br>
         </c:forEach>
         
-        <div align="center">
         <c:if test="${ !empty postVo }">
       <!-- paging처리 -->  
         <c:choose>
@@ -244,12 +276,9 @@
 		</c:if>
 		 </div>
         </div>
-	  </div>
-      <hr> 
+	  <hr>
     </div> 
-    </div>
- 
- 
+
     <div class="col-sm-3"> 
       <c:choose>
       	<c:when test="${empty blogVo.logo }">
@@ -269,6 +298,7 @@
       	</ul>
       </div> 
     </div> 
+    </div>
  
     <div class="col-sm-1"></div> 
   <br> 

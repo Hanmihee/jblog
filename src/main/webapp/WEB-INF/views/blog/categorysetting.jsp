@@ -98,6 +98,45 @@
 			        
 			    });
 			}
+	
+	function checkInput() {
+
+		var obj = document.categorySetting;
+
+		if (isNull(obj.categoryName)) {
+			alert('카테고리 이름을 입력해주세요');
+			return false;
+		} else if (isNull(obj.categoryDescription)) {
+			alert('카테고리 설명을 입력해주세요');
+			return false;
+		} else{
+			addCategory();
+		} 
+	}
+
+	function isNull(obj) {
+		if (obj.value == "") {
+			obj.focus();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	window.onload = function () {
+	  $("#categoryDescription").keydown(function(key) {
+          if (key.keyCode == 13) {
+        	  checkInput();
+          }
+      });
+	  
+	  $("#categoryName").keydown(function(key) {
+          if (key.keyCode == 13) {
+        	  checkInput();
+          }
+      });
+	};
+	  
 </script>
 </head> 
 <body> 

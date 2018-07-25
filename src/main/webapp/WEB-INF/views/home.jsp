@@ -49,15 +49,15 @@
 
 			<div class="row">
 				<div class="col-sm-3"></div>
-				<div class="col-sm-5">
-					<div class="row">
-						<input type="text" id="search_text" class="form-control col-sm-6" />
+					<div class="col-sm-5">
+						<div class="row">
+							<input type="text" id="search_text" class="form-control col-sm-6" />
+						</div>
 					</div>
-				</div>
-				<div class="col-sm-4">
-					<button type="button" class="btn btn-default col-sm-2"
-						id="search_btn">검색</button>
-				</div>
+					<div class="col-sm-4">
+						<button type="button" class="btn btn-default col-sm-2"
+							id="search_btn">검색</button>
+					</div>
 			</div>
 		</div>
 		<br>

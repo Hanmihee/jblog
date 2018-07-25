@@ -23,11 +23,9 @@ function checkInput() {
 
 	if (isNull(obj.title)) {
 		alert('제목을 입력해주세요');
-		// obj.title.focus();
 		return false;
 	} else if (isNull(obj.content)) {
 		alert('내용을 입력해주세요');
-		// obj.content.focus();
 		return false;
 	} else{
 		document.boardwriteForm.submit();
@@ -42,6 +40,7 @@ function isNull(obj) {
 		return false;
 	}
 }
+
 </script>
 </head> 
 <body> 
