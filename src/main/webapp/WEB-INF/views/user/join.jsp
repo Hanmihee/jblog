@@ -115,9 +115,11 @@
 						<label for="inputName" class="col-sm-3 control-label">이름</label>
 						<div class="col-sm-6">
 							<form:input path="name" class="form-control" placeholder="이름" />
+							<p class="help-block">2글자 이상 5글자 이하</p>
 							<spring:hasBindErrors name="userVo">
 								<c:if test="${errors.hasFieldErrors('name') }">
-									<font color="red"> <spring:message
+									<font color="red"> 
+									<spring:message
 											code="${errors.getFieldError('name').codes[0] }"
 											text="${errors.getFieldError('name').defaultMessage }" />
 									</font>
@@ -130,6 +132,7 @@
 						<label for="inputID" class="col-sm-3 control-label">아이디</label>
 						<div class="col-sm-4">
 							<form:input path="id" class="form-control" placeholder="아이디" />
+							<p class="help-block">2글자 이상 20글자 이하</p>
 							<spring:hasBindErrors name="userVo">
 								<c:if test="${errors.hasFieldErrors('id') }">
 									<font color="red"> <spring:message
@@ -153,7 +156,7 @@
 								placeholder="비밀번호" />
 							<p class="help-block">숫자,문자 8자 이상 20이하</p>
 							<spring:hasBindErrors name="userVo">
-								<c:if test="${errors.hasFieldErrors('name') }">
+								<c:if test="${errors.hasFieldErrors('password') }">
 									<font color="red"> <spring:message
 											code="${errors.getFieldError('password').codes[0] }"
 											text="${errors.getFieldError('password').defaultMessage }" />
