@@ -108,10 +108,6 @@ public class BlogService {
 		return blogDao.getComments(postNo);
 	}
 
-	/*public List<PostVo> getPostListFirst(String userId){
-		return blogDao.getPostListFirst(userId);
-	}*/
-
 	public List<PostVo> getPostListFirst(Map<String,Object> postMap){
 		return blogDao.getPostListFirst(postMap);
 	}
@@ -134,5 +130,14 @@ public class BlogService {
 
 	public int getMaxPageCount(int postPerPage,String userId) {
 		return blogDao.getMaxPageCount(postPerPage,userId);
+	}
+	
+	// TODO : selectPostList 지우기
+	public List<PostVo> getPostListCategory(Map<String, Object> postMap) {
+		return blogDao.getPostListCategory(postMap);
+	}
+
+	public int getMaxPageCountCategory(int postPerPage, String userId, Long categoryNo) {
+		return blogDao.getMaxPageCountCategory(postPerPage , userId , categoryNo);
 	}
 }

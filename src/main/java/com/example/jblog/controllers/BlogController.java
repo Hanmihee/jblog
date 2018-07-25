@@ -115,40 +115,6 @@ public class BlogController {
 		return map;
 	}
 
-	// TODO 수정필요.
-	/*@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public String myBlog(@PathVariable("userId") String userId, Model model) {
-		List<CommentVo> commentVo;
-		// TODO : if문 정리하기
-		BlogVo blogVo = blogService.getBlogContent(userId);
-		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
-		
-		// 모든 게시글을 가져옴. 
-		List<PostVo> postListVo = blogService.getPostListFirst(userId);
-		
-		// 맨위의 글을 가져옴. (최신글)
-		PostVo postVo = blogService.getPostNewestFirst(userId);
-		
-		if(postVo != null ){
-			commentVo = blogService.getComments(postVo.getNo());
-			model.addAttribute("commentVo", commentVo);
-		}
-		if (blogVo != null) {
-			// 이름이 존재함
-			model.addAttribute("blogVo", blogVo);
-			model.addAttribute("categoryVo", categoryVo);
-			model.addAttribute("postListVo", postListVo);
-			model.addAttribute("postVo", postVo);
-			model.addAttribute("userId", userId);
-			
-
-			return "blog/blogmaindefault";
-		} else {
-			// 이름이 존재하지 않음.
-			return "blog/blogNotFound";
-		}
-	}
-*/
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public String myBlog(@PathVariable("userId") String userId, Model model) {
 		int page = 1;
@@ -275,21 +241,33 @@ public class BlogController {
 
 		return blogService.getComments(postNo);
 	}
-
+	
+	// TODO Service에서 , getPostList 지우기
 	@RequestMapping(value = "/category/{userId}/{categoryNo}", method = RequestMethod.GET)
 	public String moveCategory(@PathVariable("userId") String userId, @PathVariable("categoryNo") Long no,
 			Model model) {
+		
+		int maxPage	= 1;
+		int navStartPage = 1;
+		int page = 1;
+		
+		Map<String, Object> postMap = new HashMap<String, Object>();
+		postMap.put("userId", userId);
+		postMap.put("categoryNo", no);
+		postMap.put("currPage", page);	
+		postMap.put("postPerPage", 3);
+		
 		List<CommentVo> commentVo;
 		
+		List<PostVo> postListVo = blogService.getPostListCategory(postMap); // 필요한것 : userId , categoryNo , 
+		maxPage = blogService.getMaxPageCountCategory(3,userId,no); // 인자(postPerPage) : 한페이지당 몇개의 게시글을 보여줄지? 
+																	// no : 카테고리No
 		BlogVo blogVo = blogService.getBlogContent(userId);
 		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
 
-		Map<String, Object> postMap = new HashMap<String, Object>();
-		postMap.put("categoryNo", no);
-		postMap.put("userId", userId);
-
-		List<PostVo> postListVo = blogService.getPostList(postMap); // 수정필요
-		PostVo postVo = blogService.getPostNewest(postMap); // 수정 필요
+		PostVo postVo = blogService.getPostNewest(postMap); 
+		
+		navStartPage = (page - 1) / 5 * 5 + 1;
 		
 		if(postVo != null) {
 			commentVo = blogService.getComments(postVo.getNo());
@@ -303,6 +281,12 @@ public class BlogController {
 			model.addAttribute("postListVo", postListVo);
 			model.addAttribute("postVo", postVo);
 			model.addAttribute("userId", userId);
+			
+			model.addAttribute("currPage", page);
+			model.addAttribute("postPerPage", 3);
+			model.addAttribute("maxPage", maxPage);
+			model.addAttribute("navStartPage", navStartPage);
+			model.addAttribute("navPageCount", 5); // 네비게이션 갯수
 
 			return "blog/blogmain";
 		} else {
@@ -363,43 +347,6 @@ public class BlogController {
 		
 		return map;
 	}
-	
-	/*@RequestMapping(value = "/post/default/{userId}/{postNo}/{page}", method = RequestMethod.GET)
-	public String moveBlogMainDefault(@PathVariable("userId") String userId, @PathVariable("postNo") Long postNo,
-			Model model) {
-
-		
-		Map<String, Object> postMap = new HashMap<String, Object>();
-		postMap.put("postNo", postNo);
-		postMap.put("userId", userId);
-		
-		List<CommentVo> commentVo;
-		BlogVo blogVo = blogService.getBlogContent(userId);
-		List<CategoryVo> categoryVo = blogService.getCategoryList(userId);
-		
-		// TODO
-		// 모든 게시글을 가져옴.
-		List<PostVo> postListVo = blogService.getPostListFirst(userId);
-		
-		PostVo postVo = blogService.getPostSelect(postMap);
-		if(postVo != null ){
-			commentVo = blogService.getComments(postVo.getNo());
-			model.addAttribute("commentVo", commentVo);
-		}
-		if (blogVo != null) {
-			// 이름이 존재함
-			model.addAttribute("blogVo", blogVo);
-			model.addAttribute("categoryVo", categoryVo);
-			model.addAttribute("postListVo", postListVo);
-			model.addAttribute("postVo", postVo);
-			model.addAttribute("userId", userId);
-
-			return "blog/blogmaindefault";
-		} else {
-			// 이름이 존재하지 않음.
-			return "blog/blogNotFound";
-		}
-	}*/
 	
 	@RequestMapping(value = "/post/default/{userId}/{postNo}/{page}", method = RequestMethod.GET)
 	public String moveBlogMainDefault(@PathVariable("userId") String userId, @PathVariable("postNo") Long postNo,

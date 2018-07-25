@@ -81,10 +81,6 @@ public class BlogDao {
 	public List<CommentVo> getComments(Long postNo) {
 		return sqlSession.selectList("comment.selectCommentList",postNo);
 	}
-
-	/*public List<PostVo> getPostListFirst(String userId) {
-		return sqlSession.selectList("post.selectPostListFirst",userId);
-	}*/
 	
 	/* 페이지의 게시글들 모두 가져오기 */
 	public List<PostVo> getPostListFirst(Map<String,Object> postMap) {
@@ -131,6 +127,41 @@ public class BlogDao {
 		System.out.println("div : "+div);
 		int mod = vo.getPmod();
 		System.out.println("mod : "+mod);
+		
+		int maxPage = div;
+		
+		if(mod > 0) {
+			maxPage += 1;
+		}
+		
+		System.out.println("maxPage : "+maxPage);
+		
+		return maxPage;
+	}
+
+	public List<PostVo> getPostListCategory(Map<String, Object> postMap) {
+		Map<String,Object> postListMap = new HashMap<String, Object>();
+		int currPage = (Integer) postMap.get("currPage");
+		int postPerPage = (Integer) postMap.get("postPerPage");
+		int startPos = (currPage - 1) * postPerPage;
+		
+		postListMap.put("categoryNo",postMap.get("categoryNo"));
+		postListMap.put("startPos", startPos);
+		postListMap.put("postPerPage", postMap.get("postPerPage"));
+		postListMap.put("userId", postMap.get("userId"));
+		
+		return sqlSession.selectList("post.selectPostListCategory",postListMap);
+	}
+
+	public int getMaxPageCountCategory(int postPerPage, String userId, Long categoryNo) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("postPerPage", postPerPage);
+		map.put("categoryNo", categoryNo);
+		
+		PagingVo vo = sqlSession.selectOne("post.selectMaxPageCountCategory",map);
+		int div = vo.getPdiv();
+		int mod = vo.getPmod();
 		
 		int maxPage = div;
 		

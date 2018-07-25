@@ -206,8 +206,6 @@
       <!-- paging처리 -->  
         <c:choose>
 			<c:when test="${currPage > 1 }">
-			<!-- TODO -->
-			<%-- <a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${post.no}/${currPage - 1 }"> --%> ◀ </a>
 			<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${currPage - 1 }"> ◀ </a>
 			</c:when>
 			<c:otherwise>
@@ -225,7 +223,6 @@
 						<b>${pageIdx }</b>
 					</c:when>
 					<c:otherwise>
-						<!-- TODO -->
 						<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${pageIdx}">${pageIdx }</a>
 					</c:otherwise>
 				</c:choose>
@@ -235,7 +232,6 @@
 		<!-- 다음 페이지 처리 -->
 		<c:choose>
 			<c:when test="${currPage < maxPage }"> <!-- 현재 페이지수 < 최대 페이지수 -->
-				<!-- TODO -->
 				<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${currPage + 1 }"> ▶ </a> 
 			</c:when>
 			<c:otherwise>
