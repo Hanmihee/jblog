@@ -85,7 +85,7 @@
       		LIMIT 1;
     	  ]]>
 	</select>
-	<select id="selectPostListFirst" parameterType="string"
+	<!-- <select id="selectPostListFirst" parameterType="string"
 		resultType="postvo">
 		  <![CDATA[ 
       		SELECT no , category_no, user_no, title , content, reg_date
@@ -97,7 +97,22 @@
       		) 
       		ORDER BY reg_date DESC
     	  ]]>
+	</select> -->
+	<select id="selectPostListFirst" parameterType="map"
+		resultType="postvo">
+		  <![CDATA[ 
+      		SELECT no , category_no, user_no, title , content, reg_date
+     		FROM post
+      		WHERE  user_no = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) 
+      		ORDER BY reg_date DESC , no DESC
+      		LIMIT #{startPos} , #{postPerPage}
+    	  ]]>
 	</select>
+	
 	<select id="selectPostSelect" parameterType="map"
 		resultType="postvo">
 		  <![CDATA[ 
@@ -110,10 +125,18 @@
       		) AND no = #{postNo}
     	  ]]>
 	</select>
+		<select id="selectMaxPageCount" parameterType="map"
+		resultType="pagingvo">
+		  <![CDATA[ 
+      		SELECT tot, tot div #{postPerPage} pdiv, tot mod #{postPerPage} pmod 
+      		FROM (SELECT count(*) tot FROM post WHERE user_no  = (
+      			select no
+      			from users
+      			where id = #{userId}
+      		) ) t
+    	  ]]>
+	</select>
 </mapper>
-
-
-
 
 
 

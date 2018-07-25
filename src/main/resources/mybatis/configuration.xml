@@ -13,6 +13,7 @@
 		<typeAlias alias="categoryvo" type="com.example.jblog.vo.CategoryVo" />
 		<typeAlias alias="postvo" type="com.example.jblog.vo.PostVo" />
 		<typeAlias alias="commentvo" type="com.example.jblog.vo.CommentVo" />
+		<typeAlias alias="pagingvo" type="com.example.jblog.vo.PagingVo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />

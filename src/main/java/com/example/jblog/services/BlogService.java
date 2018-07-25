@@ -103,19 +103,19 @@ public class BlogService {
 	public List<CommentVo> getCommentList(Map<String, Object> commentMap) {
 		return blogDao.selectCommentList(commentMap);
 	}
-	
-	/*public CommentVo getComment(Map<String, Object> commentMap) {
-		return blogDao.selectComment(commentMap);
-	}*/
 
 	public List<CommentVo> getComments(Long postNo) {
 		return blogDao.getComments(postNo);
 	}
 
-	public List<PostVo> getPostListFirst(String userId){
+	/*public List<PostVo> getPostListFirst(String userId){
 		return blogDao.getPostListFirst(userId);
-	}
+	}*/
 
+	public List<PostVo> getPostListFirst(Map<String,Object> postMap){
+		return blogDao.getPostListFirst(postMap);
+	}
+	
 	public PostVo getPostNewestFirst(String userId) {
 		return blogDao.getPostNewwstFirst(userId);
 	}
@@ -130,5 +130,9 @@ public class BlogService {
 
 	public boolean deleteComment(Map<String, Object> categoryMap) {
 		return blogDao.deleteComment(categoryMap);
+	}
+
+	public int getMaxPageCount(int postPerPage,String userId) {
+		return blogDao.getMaxPageCount(postPerPage,userId);
 	}
 }

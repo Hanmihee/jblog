@@ -1,5 +1,6 @@
 package com.example.jblog.repositories;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
 import com.example.jblog.vo.CommentVo;
+import com.example.jblog.vo.PagingVo;
 import com.example.jblog.vo.PostVo;
 
 @Repository
@@ -80,8 +82,26 @@ public class BlogDao {
 		return sqlSession.selectList("comment.selectCommentList",postNo);
 	}
 
-	public List<PostVo> getPostListFirst(String userId) {
+	/*public List<PostVo> getPostListFirst(String userId) {
 		return sqlSession.selectList("post.selectPostListFirst",userId);
+	}*/
+	
+	/* 페이지의 게시글들 모두 가져오기 */
+	public List<PostVo> getPostListFirst(Map<String,Object> postMap) {
+		// 한페이지 데이터 가져오기
+		Map<String,Object> postListMap = new HashMap<String, Object>();
+		int currPage = (Integer) postMap.get("currPage");
+		System.out.println("currPage : " + currPage);
+		int postPerPage = (Integer) postMap.get("postPerPage");
+		System.out.println("postPerPage : "+postPerPage);
+		int startPos = (currPage - 1) * postPerPage;
+		
+		postListMap.put("startPos", startPos);
+		System.out.println("startPos : "+startPos);
+		postListMap.put("postPerPage", postMap.get("postPerPage"));
+		postListMap.put("userId", postMap.get("userId"));
+		System.out.println("userId : "+postMap.get("userId"));
+		return sqlSession.selectList("post.selectPostListFirst",postListMap);
 	}
 
 	public PostVo getPostNewwstFirst(String userId) {
@@ -99,5 +119,27 @@ public class BlogDao {
 	public boolean deleteComment(Map<String, Object> categoryMap) {
 		int count = sqlSession.delete("comment.deleteComment",categoryMap);
 		return count == 1;
+	}
+
+	public int getMaxPageCount(int postPerPage,String userId) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("postPerPage", postPerPage);
+		
+		PagingVo vo = sqlSession.selectOne("post.selectMaxPageCount",map);
+		int div = vo.getPdiv();
+		System.out.println("div : "+div);
+		int mod = vo.getPmod();
+		System.out.println("mod : "+mod);
+		
+		int maxPage = div;
+		
+		if(mod > 0) {
+			maxPage += 1;
+		}
+		
+		System.out.println("maxPage : "+maxPage);
+		
+		return maxPage;
 	}
 }

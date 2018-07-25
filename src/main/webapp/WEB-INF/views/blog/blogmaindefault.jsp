@@ -191,18 +191,57 @@
       	</c:forEach>
       </div><br>
       
-      <!-- postList -->
       <div>
 	  <hr class="col-sm-11" style="border:solid 0.3px black;">
+       <!-- postList -->
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
          	<div class="col-sm-9"> 
-            	<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${post.no}">${post.title}</a>
+            	<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${post.no}/${currPage}">${post.title}</a>
          	</div> 
          	<div class="col-sm-3"> 
             	<p>${post.regDate}</p>
          	</div><br>
         </c:forEach>
+      <!-- paging처리 -->  
+        <c:choose>
+			<c:when test="${currPage > 1 }">
+			<!-- TODO -->
+			<%-- <a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${post.no}/${currPage - 1 }"> --%> ◀ </a>
+			<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${currPage - 1 }"> ◀ </a>
+			</c:when>
+			<c:otherwise>
+			<font>이전 페이지 없음</font>
+			</c:otherwise>
+		</c:choose>
+		
+		<!-- 게시물 목록의 처리 -->
+		<!-- 1페이지부터 5페이지까지 loop를 돈다 -->
+		<c:forEach begin="${navStartPage }" end="${navStartPage + navPageCount - 1}" var="pageIdx">
+			<c:if test="${pageIdx <= maxPage }">
+				<!-- 네비게이션의 페이지가 현재페이지이면 링크는 표시하지 않음 -->
+				<c:choose>
+					<c:when test="${currPage == pageIdx }">
+						<b>${pageIdx }</b>
+					</c:when>
+					<c:otherwise>
+						<!-- TODO -->
+						<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${pageIdx}">${pageIdx }</a>
+					</c:otherwise>
+				</c:choose>
+		</c:if>
+		</c:forEach>
+		
+		<!-- 다음 페이지 처리 -->
+		<c:choose>
+			<c:when test="${currPage < maxPage }"> <!-- 현재 페이지수 < 최대 페이지수 -->
+				<!-- TODO -->
+				<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${currPage + 1 }"> ▶ </a> 
+			</c:when>
+			<c:otherwise>
+				<font>다음 페이지 없음</font>
+			</c:otherwise>
+		</c:choose>
         </div>
 	  </div>
       <hr> 
