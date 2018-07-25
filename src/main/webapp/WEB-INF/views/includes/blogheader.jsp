@@ -20,14 +20,16 @@
 	float: left;
 }
 
-#jumbo {
-	color: black !important;
+.jumbotron {
+	background-color: #585858;
+	color: white !important;
 } 
+
 </style>
 </head>
 <body>
-	<div >
-		<div class="jumbotron" id="jumbo">
+	<div>
+		<div class="jumbotron" id="jumbo" align="center">
 			<center>
 				<h2>${blogVo.title}</h2>
 			</center>

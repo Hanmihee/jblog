@@ -195,27 +195,6 @@ public class BlogController {
 		}
 	}
 
-	@RequestMapping(value = "/{userId}/postList", method = RequestMethod.POST)
-	@ResponseBody
-	public List<PostVo> getCategoryPostList(@PathVariable("userId") String userId,
-			@RequestParam("categoryno") String categoryNo) {
-		Map<String, Object> postMap = new HashMap<String, Object>();
-		postMap.put("userId", userId);
-		postMap.put("categoryNo", categoryNo);
-
-		return blogService.getCategoryPostList(postMap);
-	}
-
-	@RequestMapping(value = "/{userId}/post", method = RequestMethod.POST)
-	@ResponseBody
-	public List<PostVo> getPost(@PathVariable("userId") String userId, @RequestParam("no") String no) {
-		Map<String, Object> postMap = new HashMap<String, Object>();
-		postMap.put("userId", userId);
-		postMap.put("no", no);
-
-		return blogService.getPost(postMap);
-	}
-
 	@RequestMapping(value = "{userId}/addcomment", method = RequestMethod.POST)
 	@ResponseBody
 	public List<CommentVo> addAndGetCommentList(@PathVariable("userId") String userId,
@@ -235,8 +214,7 @@ public class BlogController {
 
 		return blogService.getComments(postNo);
 	}
-	
-	// TODO Service에서 , getPostList 지우기
+
 	@RequestMapping(value = "/category/{userId}/{categoryNo}", method = RequestMethod.GET)
 	public String moveCategory(@PathVariable("userId") String userId, @PathVariable("categoryNo") Long no,
 			Model model) {

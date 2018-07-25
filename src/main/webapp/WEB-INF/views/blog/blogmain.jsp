@@ -187,7 +187,8 @@
       </div><br>
       
       <div>
-	  <hr class="col-sm-11" style="border:solid 0.3px black;">
+	  <hr class="col-sm-12" style="border:solid 0.3px black;">
+	  	<br>
        <!-- postList -->
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
@@ -199,6 +200,7 @@
          	</div><br>
         </c:forEach>
         
+        <div align="center">
         <c:if test="${ !empty postVo }">
       <!-- paging처리 -->  
         <c:choose>
@@ -240,10 +242,12 @@
 			</c:otherwise>
 		</c:choose>
 		</c:if>
+		 </div>
         </div>
 	  </div>
       <hr> 
     </div> 
+    </div>
  
  
     <div class="col-sm-3"> 
@@ -267,7 +271,6 @@
     </div> 
  
     <div class="col-sm-1"></div> 
-  </div> 
   <br> 
   <c:import url="/WEB-INF/views/includes/footer.jsp" /> 
 </body> 

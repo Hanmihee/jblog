@@ -15,7 +15,7 @@
 	<c:otherwise>
 		<center>
 			<div id="footer">
-				<p>(c)opyright 2018, ${authUser.name}</p>
+				<p>(c)opyright 2018, ${userId}</p>
 			</div>
 		</center>
 	</c:otherwise>

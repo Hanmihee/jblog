@@ -188,7 +188,7 @@
       </div><br>
       
       <div>
-	  <hr class="col-sm-11" style="border:solid 0.3px black;">
+	  <hr class="col-sm-12" style="border:solid 0.3px black;">
        <!-- postList -->
        <div id="postList">  
        	<c:forEach var="post" items="${postListVo}" varStatus="Loop">	
