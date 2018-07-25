@@ -16,6 +16,33 @@
 <title>HOME</title> 
 <script language="javascript" type="text/javascript" 
   src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
+<script type="text/javascript">
+function checkInput() {
+
+	var obj = document.boardwriteForm;
+
+	if (isNull(obj.title)) {
+		alert('제목을 입력해주세요');
+		// obj.title.focus();
+		return false;
+	} else if (isNull(obj.content)) {
+		alert('내용을 입력해주세요');
+		// obj.content.focus();
+		return false;
+	} else{
+		document.boardwriteForm.submit();
+	} 
+}
+
+function isNull(obj) {
+	if (obj.value == "") {
+		obj.focus();
+		return true;
+	} else {
+		return false;
+	}
+}
+</script>
 </head> 
 <body> 
   <div id="container"> 
@@ -54,7 +81,6 @@
           <div class="form-group"> 
             <label for="content" class="col-sm-3 control-label">내용</label> 
               <div class="col-sm-8"> 
-             <!-- textarea -->
              <textarea id="content" style="overflow-y:auto;" name="content" class="form-control" rows="15" cols="65"></textarea>
               <BR> 
             </div> 
@@ -63,7 +89,7 @@
           <div class="form-group"> 
           <div class="col-sm-3"></div> 
           <div class="col-sm-6"> 
-            <input class="btn btn-default" type="submit" value="포스트 하기"/> 
+            <input class="btn btn-default" type="button" onclick="checkInput()" value="포스트 하기"/> 
           </div> 
           </div> 
           <br> 
