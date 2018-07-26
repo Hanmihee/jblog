@@ -77,6 +77,8 @@
 			success : function(result){
 				if(result.data){
 				 	getComment(postNo);
+				}else{
+					alert("코멘트를 삭제할 수 없습니다!");
 				}
 			},
 			error : function(request,status,error){

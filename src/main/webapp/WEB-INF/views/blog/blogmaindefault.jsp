@@ -212,6 +212,8 @@
             	<p>${post.regDate}</p>
          	</div><br>
         </c:forEach>
+        
+  <c:if test="${ !empty postVo }">
       <!-- paging처리 -->  
         <c:choose>
 			<c:when test="${currPage > 1 }">
@@ -221,9 +223,11 @@
 			<font>이전 페이지 없음</font>
 			</c:otherwise>
 		</c:choose>
+		</c:if>
 		
 		<!-- 게시물 목록의 처리 -->
 		<!-- 1페이지부터 5페이지까지 loop를 돈다 -->
+		<c:if test="${ !empty postVo }">
 		<c:forEach begin="${navStartPage }" end="${navStartPage + navPageCount - 1}" var="pageIdx">
 			<c:if test="${pageIdx <= maxPage }">
 				<!-- 네비게이션의 페이지가 현재페이지이면 링크는 표시하지 않음 -->
@@ -237,8 +241,10 @@
 				</c:choose>
 		</c:if>
 		</c:forEach>
+		</c:if>
 		
 		<!-- 다음 페이지 처리 -->
+		<c:if test="${ !empty postVo }">
 		<c:choose>
 			<c:when test="${currPage < maxPage }"> <!-- 현재 페이지수 < 최대 페이지수 -->
 				<a href="${pageContext.request.contextPath }/blog/post/default/${userId}/${postVo.no}/${currPage + 1 }"> ▶ </a> 
@@ -247,10 +253,12 @@
 				<font>다음 페이지 없음</font>
 			</c:otherwise>
 		</c:choose>
+		</c:if>
         </div>
 	  </div>
       <hr> 
     </div> 
+    
  
     <div class="col-sm-3"> 
       <c:choose>

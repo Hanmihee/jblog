@@ -199,6 +199,7 @@ public class BlogController {
 		}
 	}
 
+	@Auth
 	@RequestMapping(value = "{userId}/addcomment", method = RequestMethod.POST)
 	@ResponseBody
 	public List<CommentVo> addAndGetCommentList(@PathVariable("userId") String userId,
@@ -320,6 +321,7 @@ public class BlogController {
 		}
 	}
 	
+	@Auth
 	@RequestMapping(value = "/{userId}/deletecomment", method = RequestMethod.POST)
 	@ResponseBody
 	public Object deleteComment(@PathVariable("userId") String userId, @RequestParam("no") Long no,
@@ -335,6 +337,9 @@ public class BlogController {
 
 		if(result) {
 			map.put("result", "success");
+			map.put("data", result);
+		}else {
+			map.put("result", "fail");
 			map.put("data", result);
 		}
 		

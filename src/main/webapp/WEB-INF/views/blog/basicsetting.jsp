@@ -43,8 +43,7 @@ function readURL(input) {
         </div> 
         <br> 
         <br> 
-         
-        <!-- TODO : multipart 추가 --> 
+        
         <form action="${pageContext.request.contextPath}/blog/${authUser.id}/admin/updatesetting" class="form-horizontal" name="blogSetting" 
         	enctype="multipart/form-data" method="post"> 
  
@@ -87,7 +86,7 @@ function readURL(input) {
            		<div class="col-sm-6"> 
              	 	<div name="child2" class="col-sm-6"> 
               		<input  type="file" name="logo"  onchange="readURL(this);"/>
-              		<img id="blah" src="${pageContext.request.contextPath }/logo/${blogVo.logo}"alt="my image" />
+              		<img id="blah" src="${pageContext.request.contextPath }/logo/${blogVo.logo}"alt="${blogVo.logo }" />
               	</div> 
               	<BR> 
             	</div> 

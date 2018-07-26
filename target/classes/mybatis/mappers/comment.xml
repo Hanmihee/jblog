@@ -30,7 +30,7 @@
 	<delete id="deleteComment" parameterType="map">
 		<![CDATA[
 			DELETE FROM comment
-			WHERE  no = #{no} 
+			WHERE  no = #{no} AND user_id = #{id}
 		]]>
 	</delete>
 </mapper>
