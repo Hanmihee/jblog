@@ -29,5 +29,19 @@
 		WHERE user_no = (select no from users where id=#{id} )
     ]]> 
   </update>
+  <select id="selectByBlogName" parameterType="string" resultType="searchvo"> 
+    <![CDATA[ 
+  		SELECT b.title as blogName , u.name as user_name , u.id as id
+		FROM blog b ,users u
+		WHERE b.title LIKE CONCAT("%", #{searchText}, "%") AND u.no = b.user_no
+    ]]> 
+  </select> 
+    <select id="selectByBlogger" parameterType="string" resultType="searchvo"> 
+    <![CDATA[ 
+  		SELECT b.title as blogName, u.name as userName , u.id as id
+		FROM blog b ,users u
+		WHERE u.name LIKE CONCAT("%", #{searchText}, "%") AND u.no = b.user_no
+    ]]> 
+  </select> 
 </mapper> 
  

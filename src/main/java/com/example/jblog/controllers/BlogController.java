@@ -21,6 +21,7 @@ import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
 import com.example.jblog.vo.CommentVo;
 import com.example.jblog.vo.PostVo;
+import com.example.jblog.vo.SearchVo;
 
 @Controller
 @RequestMapping("/blog")
@@ -386,6 +387,16 @@ public class BlogController {
 			// 이름이 존재하지 않음.
 			return "blog/blogNotFound";
 		}
+	}
+	
+	@RequestMapping(value="/search" , method = RequestMethod.GET)
+	public String Search(Model model,@RequestParam("search_text") String searchText , 
+			@RequestParam("search_radio") String selectRadio) {
+		
+		List<SearchVo> searchVo = blogService.searchBlogAndBlogger(searchText , selectRadio);
+		
+		model.addAttribute("searchVo",searchVo);
+		return "blog/searchResult";
 	}
 }
 

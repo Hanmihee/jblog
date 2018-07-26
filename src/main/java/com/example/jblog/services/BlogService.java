@@ -15,7 +15,7 @@ import com.example.jblog.vo.BlogVo;
 import com.example.jblog.vo.CategoryVo;
 import com.example.jblog.vo.CommentVo;
 import com.example.jblog.vo.PostVo;
-import com.example.jblog.vo.UserVo;
+import com.example.jblog.vo.SearchVo;
 
 @Service
 public class BlogService {
@@ -140,5 +140,9 @@ public class BlogService {
 
 	public int getMaxPageCountByPost(int postPerPage, String userId, Long categoryNo) {
 		return blogDao.getMaxPageCountByPost(postPerPage,userId,categoryNo);
+	}
+
+	public List<SearchVo> searchBlogAndBlogger(String searchText, String selectRadio) {
+		return blogDao.getBlogNameAndBlogger(searchText,selectRadio);
 	}
 }

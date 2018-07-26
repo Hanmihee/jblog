@@ -14,6 +14,7 @@
 		<typeAlias alias="postvo" type="com.example.jblog.vo.PostVo" />
 		<typeAlias alias="commentvo" type="com.example.jblog.vo.CommentVo" />
 		<typeAlias alias="pagingvo" type="com.example.jblog.vo.PagingVo" />
+		<typeAlias alias="searchvo" type="com.example.jblog.vo.SearchVo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />

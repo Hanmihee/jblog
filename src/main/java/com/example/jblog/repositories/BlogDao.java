@@ -13,6 +13,7 @@ import com.example.jblog.vo.CategoryVo;
 import com.example.jblog.vo.CommentVo;
 import com.example.jblog.vo.PagingVo;
 import com.example.jblog.vo.PostVo;
+import com.example.jblog.vo.SearchVo;
 
 @Repository
 public class BlogDao {
@@ -190,5 +191,16 @@ public class BlogDao {
 		}
 
 		return maxPage;
+	}
+
+	public List<SearchVo> getBlogNameAndBlogger(String searchText, String selectRadio) {
+		
+		if(selectRadio.equals("blogname")) {
+			// blogname이 들어왔을때
+			return sqlSession.selectList("blog.selectByBlogName",searchText);
+		}else {
+			// blogger 가 들어왔을때
+			return sqlSession.selectList("blog.selectByBlogger",searchText);
+		}
 	}
 }
