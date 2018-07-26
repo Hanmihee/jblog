@@ -31,7 +31,10 @@ public class BlogController {
 
 	@Auth
 	@RequestMapping(value = "/{userId}/admin/basicsetting", method = RequestMethod.GET)
-	public String moveBasicSetting() {
+	public String moveBasicSetting(Model model,@PathVariable("userId") String userId) {
+		
+		BlogVo blogVo = blogService.getBlogContent(userId);
+		model.addAttribute("blogVo",blogVo);
 		return "blog/basicsetting";
 	}
 

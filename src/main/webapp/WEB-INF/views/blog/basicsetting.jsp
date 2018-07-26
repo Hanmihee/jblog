@@ -48,27 +48,52 @@ function readURL(input) {
         <form action="${pageContext.request.contextPath}/blog/${authUser.id}/admin/updatesetting" class="form-horizontal" name="blogSetting" 
         	enctype="multipart/form-data" method="post"> 
  
-          <div class="form-group"> 
-            <label for="blogName" class="col-sm-3 control-label">블로그 
-              제목</label> 
-            <div class="col-sm-6"> 
-              <div name="child2" class="col-sm-6"> 
-                <input type="text" class="form-control" name="blogName" /> 
-              </div> 
-              <BR> 
-            </div> 
-          </div> 
+ 		<c:choose>
+ 		  <c:when test="${empty blogVo.logo}">
+          	<div class="form-group"> 
+            	<label for="blogName" class="col-sm-3 control-label">블로그 제목</label> 
+            	<div class="col-sm-6"> 
+              		<div name="child2" class="col-sm-6"> 
+                		<input type="text" class="form-control" name="blogName" value="${authUser.name }의 블로그입니다."/> 
+              		</div> 
+              		<BR> 
+            	</div> 
+         	 </div> 
  
-          <div class="form-group"> 
-            <label for="blogName" class="col-sm-3 control-label">로고 이미지</label> 
-            <div class="col-sm-6"> 
-              <div name="child2" class="col-sm-6"> 
-              <input  type="file" name="logo"  onchange="readURL(this);"/>
-              <img id="blah" src="#" alt="my image" />
-              </div> 
-              <BR> 
-            </div> 
-          </div><br><br> 
+         	 <div class="form-group"> 
+           	 <label for="blogName" class="col-sm-3 control-label">로고 이미지</label> 
+           		<div class="col-sm-6"> 
+             	 	<div name="child2" class="col-sm-6"> 
+              		<input  type="file" name="logo"  onchange="readURL(this);"/>
+              		<img id="blah" src="${pageContext.request.contextPath }/img/default_logo.png" alt="my image" />
+              	</div> 
+              	<BR> 
+            	</div> 
+          	 </div><br><br> 
+          </c:when>
+          	<c:otherwise>
+          		<div class="form-group"> 
+            	<label for="blogName" class="col-sm-3 control-label">블로그 제목</label> 
+            	<div class="col-sm-6"> 
+              		<div name="child2" class="col-sm-6"> 
+                		<input type="text" class="form-control" name="blogName" value="${blogVo.title}"/> 
+              		</div> 
+              		<BR> 
+            	</div> 
+         	 </div> 
+ 
+         	 <div class="form-group"> 
+           	 <label for="blogName" class="col-sm-3 control-label">로고 이미지</label> 
+           		<div class="col-sm-6"> 
+             	 	<div name="child2" class="col-sm-6"> 
+              		<input  type="file" name="logo"  onchange="readURL(this);"/>
+              		<img id="blah" src="${pageContext.request.contextPath }/logo/${blogVo.logo}"alt="my image" />
+              	</div> 
+              	<BR> 
+            	</div> 
+          	 </div><br><br> 
+          	</c:otherwise>
+          </c:choose> 
            
           <div class="form-group"> 
           <div class="col-sm-3"></div> 

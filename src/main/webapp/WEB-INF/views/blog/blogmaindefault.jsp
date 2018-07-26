@@ -15,13 +15,19 @@
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 <title>HOME</title> 
-<script language="javascript" type="text/javascript" 
-  src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script> 
-  <script type="text/javascript">
+<script language="javascript" type="text/javascript"
+	src="${pageContext.request.contextPath }/jquery/jquery-1.12.4.js"></script>
+<script type="text/javascript">
   function addComment(postNo){
 		var content = $("#content").val();
 		var userId = "${authUser.id}";
 		var a;
+		
+		if (content =="") {
+			alert('코멘트 내용을 입력해주세요');
+			return false;
+		}
+		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/blog/${authUser.id}/addcomment",
 			type : "post",
@@ -121,6 +127,13 @@
   			}
   		});
   	}  
+  	window.onload = function () {
+    	  $("#content").keydown(function(key) {
+              if (key.keyCode == 13) {
+            	  addComment("${postVo.no}");
+              }
+          });
+    	};
   </script>
 </head> 
 <body> 
@@ -245,7 +258,7 @@
       		<div><img width="250" src="${pageContext.request.contextPath }/img/default_logo.png"></div>
       	</c:when>
       	<c:otherwise>
-      		<div><img src="${pageContext.request.contextPath }/logo/${blogVo.logo}"></div>
+      		<div><img width="250" src="${pageContext.request.contextPath }/logo/${blogVo.logo}"></div>
       	</c:otherwise>
       </c:choose>
       <br>
